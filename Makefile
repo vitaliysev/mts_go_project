@@ -14,7 +14,24 @@ get-deps:
 	go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 generate:
+	mkdir -p pkg/swagger
+	make generate-booking-api
 	make generate-hotel-api
+
+generate-booking-api:
+	mkdir -p pkg/booking_v1
+	protoc --proto_path api/booking_v1 --proto_path vendor.protogen \
+	--go_out=pkg/booking_v1 --go_opt=paths=source_relative \
+	--plugin=protoc-gen-go=bin/protoc-gen-go \
+	--go-grpc_out=pkg/booking_v1 --go-grpc_opt=paths=source_relative \
+	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
+	--validate_out lang=go:pkg/booking_v1 --validate_opt=paths=source_relative \
+	--plugin=protoc-gen-validate=bin/protoc-gen-validate \
+	--grpc-gateway_out=pkg/booking_v1 --grpc-gateway_opt=paths=source_relative \
+	--plugin=protoc-gen-grpc-gateway=bin/protoc-gen-grpc-gateway \
+	--openapiv2_out=allow_merge=true,merge_file_name=api:pkg/swagger \
+	--plugin=protoc-gen-openapiv2=bin/protoc-gen-openapiv2 \
+	api/booking_v1/booking.proto
 
 generate-hotel-api:
 	mkdir -p pkg/hotel_v1
@@ -25,6 +42,10 @@ generate-hotel-api:
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	--validate_out lang=go:pkg/hotel_v1 --validate_opt=paths=source_relative \
 	--plugin=protoc-gen-validate=bin/protoc-gen-validate \
+	--grpc-gateway_out=pkg/hotel_v1 --grpc-gateway_opt=paths=source_relative \
+	--plugin=protoc-gen-grpc-gateway=bin/protoc-gen-grpc-gateway \
+	--openapiv2_out=allow_merge=true,merge_file_name=api:pkg/swagger \
+	--plugin=protoc-gen-openapiv2=bin/protoc-gen-openapiv2 \
 	api/hotel_v1/hotel.proto
 
 local-migration-status:
