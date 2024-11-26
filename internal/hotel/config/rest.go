@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	restHostEnvName = "REST_HOST"
-	restPortEnvName = "REST_PORT"
+	restHostEnvName = "REST_HOTEL_HOST"
+	restPortEnvName = "REST_HOTEL_PORT"
 )
 
 type RESTConfig interface {

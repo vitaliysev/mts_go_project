@@ -30,11 +30,14 @@ generate-hotel-api:
 local-migration-status:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} status -v
 
-local-migration-up:
-	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} up -v
+local-migration-hotel-up:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_HOTEL_DSN} up -v
+
+local-migration-booking-up:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_BOOKING_DIR} postgres ${PG_BOOKING_DSN} up -v
 
 local-migration-down:
-	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} down -v
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_HOTEL_DSN} down -v
 
 vendor-proto:
 		@if [ ! -d vendor.protogen/validate ]; then \
