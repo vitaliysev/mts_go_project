@@ -57,9 +57,9 @@ func (m *BookInfo) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Title
-
 	// no validation rules for PeriodUse
+
+	// no validation rules for HotelId
 
 	if len(errors) > 0 {
 		return BookInfoMultiError(errors)
@@ -348,35 +348,6 @@ func (m *UpdateBookInfo) validate(all bool) error {
 	var errors []error
 
 	if all {
-		switch v := interface{}(m.GetTitle()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, UpdateBookInfoValidationError{
-					field:  "Title",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, UpdateBookInfoValidationError{
-					field:  "Title",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetTitle()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return UpdateBookInfoValidationError{
-				field:  "Title",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if all {
 		switch v := interface{}(m.GetPeriodUse()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
@@ -399,6 +370,35 @@ func (m *UpdateBookInfo) validate(all bool) error {
 		if err := v.Validate(); err != nil {
 			return UpdateBookInfoValidationError{
 				field:  "PeriodUse",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetHotelId()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UpdateBookInfoValidationError{
+					field:  "HotelId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UpdateBookInfoValidationError{
+					field:  "HotelId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHotelId()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateBookInfoValidationError{
+				field:  "HotelId",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -969,7 +969,7 @@ func (m *ListRequest) validate(all bool) error {
 
 	// no validation rules for Offset
 
-	// no validation rules for Hotel
+	// no validation rules for HotelId
 
 	if len(errors) > 0 {
 		return ListRequestMultiError(errors)

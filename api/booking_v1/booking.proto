@@ -5,43 +5,20 @@ package booking_v1;
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
-import "google/api/annotation.proto";
 
 option go_package = "github.com/vitaliysev/mts_go_project/pkg/booking_v1;booking_v1";
 
 service BookingV1 {
-  rpc Create(CreateRequest) returns (CreateResponse){
-    option (google.api.http) = {
-      post: "/booking/v1/create"
-      body: "*"
-    };
-  }
-  rpc Get(GetRequest) returns (GetResponse){
-    option (google.api.http) = {
-      get: "/booking/v1"
-    };
-  }
-  rpc List(ListRequest) returns (ListResponse){
-    option (google.api.http) = {
-      get: "/booking/v1/list"
-    };
-  }
-  rpc Update(UpdateRequest) returns (google.protobuf.Empty){
-    option (google.api.http) = {
-      patch: "/booking/v1"
-      body: "*"
-    };
-  }
-  rpc Delete(DeleteRequest) returns (google.protobuf.Empty){
-    option (google.api.http) = {
-      delete: "/booking/v1"
-    };
-  }
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc List(ListRequest) returns (ListResponse);
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty);
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
 }
 
 message BookInfo {
-  string title = 1;
-  string period_use = 2;
+  string period_use = 1;
+  int64 hotel_id = 2;
 }
 
 message Book {
@@ -52,8 +29,8 @@ message Book {
 }
 
 message UpdateBookInfo {
-  google.protobuf.StringValue title = 1;
-  google.protobuf.StringValue period_use = 2;
+  google.protobuf.StringValue period_use = 1;
+  google.protobuf.Int64Value hotel_id = 2;
 }
 
 message CreateRequest {
@@ -75,7 +52,7 @@ message GetResponse {
 message ListRequest {
   int64 limit = 1;
   int64 offset = 2;
-  string hotel = 3;
+  int64 hotel_id = 3;
 }
 
 message ListResponse {

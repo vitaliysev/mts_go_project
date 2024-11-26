@@ -4,13 +4,13 @@ go 1.22.9
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
+	github.com/envoyproxy/protoc-gen-validate v1.1.0
 	github.com/georgysavva/scany v1.2.2
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.23.0
 	github.com/jackc/pgconn v1.14.3
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/joho/godotenv v1.5.1
 	github.com/pkg/errors v0.9.1
-	google.golang.org/genproto/googleapis/api v0.0.0-20241118233622-e639e219e697
+	github.com/rakyll/statik v0.1.7
 	google.golang.org/grpc v1.68.0
 	google.golang.org/protobuf v1.35.2
 )
