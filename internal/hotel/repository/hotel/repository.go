@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	sq "github.com/Masterminds/squirrel"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/repository"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/repository/hotel/converter"
-	modelRepo "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/repository/hotel/model"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/service/hotel/model"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/repository"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/repository/hotel/converter"
+	modelRepo "github.com/vitaliysev/mts_go_project/internal/hotel/repository/hotel/model"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/service/hotel/model"
 )
 
 const (

@@ -21,10 +21,10 @@ type CreateBookingRequest struct {
 
 type CreateBookingResponse struct {
 	ID       int64  `json:"id"`
-	cost     int64  `json:"cost"`
-	title    string `json:"title"`
-	location string `json:"location"`
-	period   int64  `json:"period"`
+	Cost     int64  `json:"cost"`
+	Title    string `json:"title"`
+	Location string `json:"location"`
+	Period   int64  `json:"period"`
 }
 
 func (x *CreateBookingRequest) GetInfo() *model.BookInfo {

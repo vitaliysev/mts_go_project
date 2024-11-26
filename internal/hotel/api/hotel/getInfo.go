@@ -3,7 +3,7 @@ package hotel
 import (
 	"context"
 	"fmt"
-	desc "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/pkg/hotel_v1"
+	desc "github.com/vitaliysev/mts_go_project/pkg/hotel_v1"
 )
 
 func (i *Implementation) GetInfo(ctx context.Context, req *desc.GetInfoRequest) (*desc.GetInfoResponse, error) {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/app"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/app"
 	"log"
 )
 

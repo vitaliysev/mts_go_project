@@ -2,14 +2,14 @@ package app
 
 import (
 	"context"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/api/hotel"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/closer"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/config"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/repository"
-	hotelRepository "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/repository/hotel"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/service"
-	hotelService "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/service/hotel"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/api/hotel"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/closer"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/config"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/repository"
+	hotelRepository "github.com/vitaliysev/mts_go_project/internal/hotel/repository/hotel"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/service"
+	hotelService "github.com/vitaliysev/mts_go_project/internal/hotel/service/hotel"
 	"log"
 )
 

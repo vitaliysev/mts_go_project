@@ -3,8 +3,8 @@ package hotel
 import (
 	"context"
 	"fmt"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/converter"
-	desc "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/pkg/hotel_v1"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/converter"
+	desc "github.com/vitaliysev/mts_go_project/pkg/hotel_v1"
 )
 
 func (s *serv) GetInfo(ctx context.Context, id int64) (*desc.HotelInfo, error) {

@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/service/hotel/model"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/service/hotel/model"
 )
 
 type HotelRepository interface {

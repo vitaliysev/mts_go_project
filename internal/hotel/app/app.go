@@ -2,13 +2,13 @@ package app
 
 import (
 	"context"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/api/hotel"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/closer"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/config"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/interceptor"
-	desc "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/pkg/hotel_v1"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/api/hotel"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/closer"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/config"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/interceptor"
+	desc "github.com/vitaliysev/mts_go_project/pkg/hotel_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"

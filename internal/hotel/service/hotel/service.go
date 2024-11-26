@@ -1,8 +1,8 @@
 package hotel
 
 import (
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/repository"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/service"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/repository"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/service"
 )
 
 type serv struct {

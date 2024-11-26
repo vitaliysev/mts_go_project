@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/api/hotel/model"
-	desc "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/pkg/hotel_v1"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/api/hotel/model"
+	desc "github.com/vitaliysev/mts_go_project/pkg/hotel_v1"
 )
 
 type HotelService interface {

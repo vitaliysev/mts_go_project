@@ -8,6 +8,7 @@ package hotel_v1
 
 import (
 	context "context"
+	"fmt"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -40,6 +41,7 @@ func NewHotelV1Client(cc grpc.ClientConnInterface) HotelV1Client {
 func (c *hotelV1Client) GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetInfoResponse)
+	fmt.Println(out)
 	err := c.cc.Invoke(ctx, HotelV1_GetInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err

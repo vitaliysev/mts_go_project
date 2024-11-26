@@ -2,12 +2,12 @@ package hotel
 
 import (
 	"context"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/hotel/api/hotel/model"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/lib/api/response"
-	"github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/internal/lib/logger/sl"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
+	"github.com/vitaliysev/mts_go_project/internal/hotel/api/hotel/model"
+	"github.com/vitaliysev/mts_go_project/internal/lib/api/response"
+	"github.com/vitaliysev/mts_go_project/internal/lib/logger/sl"
 	"log/slog"
 	"net/http"
 )

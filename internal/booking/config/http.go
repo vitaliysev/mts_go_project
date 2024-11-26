@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	httpHostEnvName = "HTTP_HOST"
-	httpPortEnvName = "HTTP_PORT"
+	httpHostEnvName = "HTTP_BOOKING_HOST"
+	httpPortEnvName = "HTTP_BOOKING_PORT"
 )
 
 type HTTPConfig interface {

@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	dsnEnvName = "PG_DSN"
+	dsnEnvName = "PG_BOOKING_DSN"
 )
 
 type PGConfig interface {
