@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package hotel_v1;
 import "validate/validate.proto";
-option go_package = "github.com/vitaliysev/mts_go_project/api/hotel_v1;hotel_v1";
+option go_package = "github.com/YOUR-USER-OR-ORG-NAME/YOUR-REPO-NAME/api/hotel_v1;hotel_v1";
 
 service HotelV1 {
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);

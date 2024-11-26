@@ -8,7 +8,6 @@ install-deps:
 	GOBIN=$(LOCAL_BIN) go install github.com/envoyproxy/protoc-gen-validate@v1.0.4
 	GOBIN=$(LOCAL_BIN) go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.20.0
 	GOBIN=$(LOCAL_BIN) go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.20.0
-	GOBIN=$(LOCAL_BIN) go install github.com/rakyll/statik@v0.1.7
 
 get-deps:
 	go get -u google.golang.org/protobuf/cmd/protoc-gen-go
@@ -18,7 +17,6 @@ generate:
 	mkdir -p pkg/swagger
 	make generate-booking-api
 	make generate-hotel-api
-	$(LOCAL_BIN)/statik -src=pkg/swagger/ -include='*.css,*.html,*.js,*.json,*.png'
 
 generate-booking-api:
 	mkdir -p pkg/booking_v1
@@ -53,11 +51,14 @@ generate-hotel-api:
 local-migration-status:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} status -v
 
-local-migration-up:
-	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} up -v
+local-migration-hotel-up:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_HOTEL_DSN} up -v
+
+local-migration-booking-up:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_BOOKING_DIR} postgres ${PG_BOOKING_DSN} up -v
 
 local-migration-down:
-	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} down -v
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_HOTEL_DSN} down -v
 
 vendor-proto:
 		@if [ ! -d vendor.protogen/validate ]; then \
@@ -65,12 +66,6 @@ vendor-proto:
 			git clone https://github.com/envoyproxy/protoc-gen-validate vendor.protogen/protoc-gen-validate &&\
 			mv vendor.protogen/protoc-gen-validate/validate/*.proto vendor.protogen/validate &&\
 			rm -rf vendor.protogen/protoc-gen-validate ;\
-		fi
-		@if [ ! -d vendor.protogen/google ]; then \
-			git clone https://github.com/googleapis/googleapis vendor.protogen/googleapis &&\
-			mkdir -p  vendor.protogen/google/ &&\
-			mv vendor.protogen/googleapis/google/api vendor.protogen/google &&\
-			rm -rf vendor.protogen/googleapis ;\
 		fi
 		@if [ ! -d vendor.protogen/protoc-gen-openapiv2 ]; then \
 			mkdir -p vendor.protogen/protoc-gen-openapiv2/options &&\

@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  postgres_volume1:
+  postgres_volume2:
+
+services:
+  pg:
+    image: postgres:14-alpine3.17
+    container_name: hotel_db
+    environment:
+      POSTGRES_DB: hotel
+      POSTGRES_USER: hotel-user
+      POSTGRES_PASSWORD: hotel-password
+    ports:
+      - "54321:5432"
+    volumes:
+      - postgres_volume1:/var/lib/postgresql/data
+
+
+  pg-local:
+    image: postgres:14-alpine3.17
+    container_name: booking_db
+    environment:
+      POSTGRES_DB: booking
+      POSTGRES_USER: booking-user
+      POSTGRES_PASSWORD: booking-password
+    ports:
+      - "54322:5432"
+    volumes:
+      - postgres_volume2:/var/lib/postgresql/data
+
+
+  migrator1:
+    build:
+      context: .
+      dockerfile: ./migration_hotel.Dockerfile
+    restart: on-failure
+    environment:
+      DB_HOST: pg
+
+  migrator2:
+    build:
+      context: .
+      dockerfile: ./migration_booking.Dockerfile
+    restart: on-failure
+    environment:
+      DB_HOST: pg-local
+
+
+

@@ -1,6 +1,11 @@
 module github.com/vitaliysev/mts_go_project
 
+
 go 1.22.9
+
+
+toolchain go1.23.3
+
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
@@ -11,6 +16,11 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/pkg/errors v0.9.1
 	github.com/rakyll/statik v0.1.7
+  github.com/go-chi/chi/v5 v5.1.0
+	github.com/go-chi/render v1.0.3
+	github.com/go-playground/validator/v10 v10.23.0
+	github.com/jackc/pgx/v5 v5.7.1
+	github.com/joho/godotenv v1.5.1
 	google.golang.org/grpc v1.68.0
 	google.golang.org/protobuf v1.35.2
 )
