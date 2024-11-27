@@ -82,13 +82,21 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
 }
 
 func (r *repo) List(ctx context.Context, offset, limit, hotel_id int64) ([]*model.Book, error) {
-	builder := sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
-		PlaceholderFormat(sq.Dollar).
-		From(tableName).
-		Where(sq.Eq{hotelIdColumn: hotel_id}).
-		Limit(uint64(limit)).
-		Offset(uint64(offset))
-
+	var builder sq.SelectBuilder
+	if hotel_id != 0 {
+		builder = sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
+			PlaceholderFormat(sq.Dollar).
+			From(tableName).
+			Where(sq.Eq{hotelIdColumn: hotel_id}).
+			Limit(uint64(limit)).
+			Offset(uint64(offset))
+	} else {
+		builder = sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
+			PlaceholderFormat(sq.Dollar).
+			From(tableName).
+			Limit(uint64(limit)).
+			Offset(uint64(offset))
+	}
 	query, args, err := builder.ToSql()
 	if err != nil {
 		return nil, err
@@ -108,7 +116,7 @@ func (r *repo) List(ctx context.Context, offset, limit, hotel_id int64) ([]*mode
 	var books []*model.Book
 	for rows.Next() {
 		var book modelRepo.Book
-		if err := rows.Scan(&book.ID, &book.CreatedAt, &book.UpdatedAt, &book.Info.Hotel_id); err != nil {
+		if err := rows.Scan(&book.ID, &book.Info.Period_use, &book.CreatedAt, &book.UpdatedAt, &book.Info.Hotel_id); err != nil {
 			return nil, err
 		}
 		books = append(books, converter.ToBookFromRepo(&book))
