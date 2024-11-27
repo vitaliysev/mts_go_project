@@ -27,9 +27,24 @@ type CreateBookingResponse struct {
 	Period   int64  `json:"period"`
 }
 
+type GetBookingRequest struct {
+	ID int64 `json:"id"`
+}
+
+type GetBookingResponse struct {
+	Info []*model.Book `json:"info"`
+}
+
 func (x *CreateBookingRequest) GetInfo() *model.BookInfo {
 	if x != nil {
 		return &x.Info
 	}
 	return nil
+}
+
+func (x *GetBookingRequest) GetInfo() int64 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
 }

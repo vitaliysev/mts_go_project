@@ -2,7 +2,6 @@ package booking_http
 
 import (
 	"context"
-	"fmt"
 	"google.golang.org/grpc"
 	"log"
 	"strings"
@@ -19,7 +18,7 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 
 	log.Printf("inserted book with id: %d", id)
 
-	conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("не удалось подключиться: %v", err)
 	}
@@ -31,7 +30,6 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	req_grpc := &hotelv1.GetInfoRequest{
 		Id: req.GetInfo().Hotel_id,
 	}
-	fmt.Println(req_grpc)
 	dates_range := req.GetInfo().Period_use
 	dates := strings.Split(dates_range, "-")
 	start := dates[0]
@@ -42,7 +40,7 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	if err1 != nil || err2 != nil {
 		log.Fatalf("ошибка парсинга даты: %v", err)
 	}
-	diff := endDate.Sub(startDate)/(3600*24*1000000000) + 1
+	diff := endDate.Sub(startDate)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 

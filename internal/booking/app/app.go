@@ -137,6 +137,10 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 		a.handleBooking(w, r, bookingHandler)
 	})
 
+	mux.HandleFunc("/booking/v1/list", func(w http.ResponseWriter, r *http.Request) {
+		a.handleBooking(w, r, bookingHandler)
+	})
+
 	a.httpServer = &http.Server{
 		Addr:    a.serviceProvider.HTTPConfig().Address(),
 		Handler: mux,
@@ -165,7 +169,18 @@ func (a *App) handleBooking(w http.ResponseWriter, r *http.Request, handler *boo
 		// Формирование успешного ответа
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(resp)
+	case http.MethodGet:
+		var req booking_http.GetBookingRequest
 
+		json.NewDecoder(r.Body).Decode(&req)
+		resp, err := handler.Get(r.Context(), &req)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(resp)
 	default:
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
