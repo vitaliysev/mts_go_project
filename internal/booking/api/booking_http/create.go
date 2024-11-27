@@ -51,9 +51,9 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 
 	return &CreateBookingResponse{
 		ID:       id,
-		cost:     int64(diff) * resp.GetHotel().GetPrice(),
-		title:    resp.GetHotel().GetName(),
-		location: resp.GetHotel().GetLocation(),
-		period:   int64(diff),
+		Cost:     int64(diff) * resp.GetHotel().GetPrice(),
+		Title:    resp.GetHotel().GetName(),
+		Location: resp.GetHotel().GetLocation(),
+		Period:   int64(diff),
 	}, nil
 }
