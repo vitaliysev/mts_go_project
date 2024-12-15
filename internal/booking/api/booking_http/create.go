@@ -2,7 +2,11 @@ package booking_http
 
 import (
 	"context"
+	"fmt"
 	"github.com/vitaliysev/mts_go_project/internal/booking/logger"
+	metric "github.com/vitaliysev/mts_go_project/internal/booking/metrics"
+	"github.com/vitaliysev/mts_go_project/internal/models"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 	descAccess "github.com/vitaliysev/mts_go_project/pkg/access_v1"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -15,7 +19,12 @@ import (
 	hotelv1 "github.com/vitaliysev/mts_go_project/pkg/hotel_v1"
 )
 
-func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) (*CreateBookingResponse, error) {
+func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) (*models.CreateBookingResponse, error) {
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "booking.Create")
+	defer span.End()
+	traceId := fmt.Sprintf("%s", span.SpanContext().TraceID())
+	ctx = metadata.AppendToOutgoingContext(ctx, "x-trace-id", traceId)
+
 	accessToken := req.Access_token
 	ctx_curr := context.Background()
 	md := metadata.New(map[string]string{"Authorization": "Bearer " + accessToken})
@@ -39,11 +48,13 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	}
 
 	logger.Info("Access granted")
+
 	id, err := i.bookService.Create(ctx, req.GetInfo(), username.GetUsername())
 	if err != nil {
 		return nil, err
 	}
 	conn.Close()
+
 	conn, err = grpc.Dial("localhost:50053", grpc.WithInsecure())
 	if err != nil {
 		logger.Error("не удалось подключиться: %v", zap.Error(err))
@@ -73,19 +84,21 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 		logger.Error("дата заезда позднее даты выезда")
 	}
 	diff := endDate.Sub(startDate)/(1000000000*3600*24) + 1
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
 
 	resp, err := client.GetInfo(ctx, req_grpc)
 	if err != nil {
 		logger.Error("ошибка при вызове GetInfo: %v", zap.Error(err))
 	}
 	logger.Info("inserted book with %d", zap.Int64("id", id))
-	return &CreateBookingResponse{
+	response := models.CreateBookingResponse{
 		ID:       id,
 		Cost:     int64(diff) * resp.GetHotel().GetPrice(),
 		Title:    resp.GetHotel().GetName(),
 		Location: resp.GetHotel().GetLocation(),
 		Period:   int64(diff),
-	}, nil
+	}
+	metric.IncMessagesCounter()
+	i.producer.SendMessage(response)
+
+	return &response, nil
 }

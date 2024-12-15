@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/vitaliysev/mts_go_project/internal/auth/model"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 )
 
 func (s *serv) Create(ctx context.Context, info *model.AuthInfo) (string, error) {
+	ctx, span := tracing.Tracer.Tracer("Auth-service").Start(ctx, "Auth.Service.Create")
+	defer span.End()
 	var login string
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
 		var errTx error

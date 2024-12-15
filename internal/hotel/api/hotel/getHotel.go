@@ -3,18 +3,21 @@ package hotel
 import (
 	"context"
 	"fmt"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
 	"github.com/vitaliysev/mts_go_project/internal/hotel/api/hotel/model"
+	metric "github.com/vitaliysev/mts_go_project/internal/hotel/metrics"
 	"github.com/vitaliysev/mts_go_project/internal/lib/api/response"
-	"github.com/vitaliysev/mts_go_project/internal/lib/logger/sl"
+	"github.com/vitaliysev/mts_go_project/internal/lib/logger"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 	descAccess "github.com/vitaliysev/mts_go_project/pkg/access_v1"
+	"go.opentelemetry.io/otel/codes"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
-	"log/slog"
 	"net/http"
+	"time"
 )
 
 type getHotelRequest struct {
@@ -26,14 +29,18 @@ type getHotelResponse struct {
 	model.Hotel
 }
 
-func NewGetHotel(ctx context.Context, log *slog.Logger, hotel *Implementation) http.HandlerFunc {
+func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "hotel.handlers.get.New"
-
-		log = log.With(
-			slog.String("op", op),
-			slog.String("request_id", middleware.GetReqID(r.Context())),
+		ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, op)
+		defer span.End()
+		traceId := fmt.Sprintf("%s", span.SpanContext().TraceID())
+		ctx = metadata.AppendToOutgoingContext(ctx, "x-trace-id", traceId)
+		timeStart := time.Now()
+		log := logger.With(
+			zap.String("op", op),
 		)
+		metric.IncRequestCounter()
 
 		var req getHotelRequest
 		err := render.DecodeJSON(r.Body, &req)
@@ -48,7 +55,7 @@ func NewGetHotel(ctx context.Context, log *slog.Logger, hotel *Implementation) h
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)
 		if err != nil {
-			log.Error("failed to dial GRPC client: %v", err)
+			log.Error("failed to dial GRPC client: %v", zap.Error(err))
 		}
 
 		cl := descAccess.NewAccessV1Client(conn)
@@ -63,25 +70,42 @@ func NewGetHotel(ctx context.Context, log *slog.Logger, hotel *Implementation) h
 		fmt.Println("Access granted")
 
 		if err != nil {
-			log.Error("failed to decode request body", sl.Err(err))
-
+			span.SetStatus(codes.Error, err.Error())
+			diffTime := time.Since(timeStart)
+			log.Error("failed to decode request body", zap.Error(err))
+			metric.IncResponseCounter("error", op)
+			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
 			render.JSON(w, r, response.Error("failed to decode request"))
 			return
 		}
-		log.Info("request body decoded", slog.Any("request", req))
+		log.Info("request body decoded", zap.Any("request", req))
+		log.Info("validating request...")
 
 		if err := validator.New().Struct(req); err != nil {
+			span.SetStatus(codes.Error, err.Error())
+			diffTime := time.Since(timeStart)
 			validateErr := err.(validator.ValidationErrors)
-			log.Error("invalid request", sl.Err(err))
+			log.Error("invalid request", zap.Error(err))
+			metric.IncResponseCounter("error", op)
+			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
 			render.JSON(w, r, response.ValidationError(validateErr))
 			return
 		}
+		log.Info("getting hotel...")
 		data, err := hotel.GetHotel(ctx, req.ID)
+
 		if err != nil {
-			log.Error("failed to get hotel", sl.Err(err))
+			diffTime := time.Since(timeStart)
+			log.Error("failed to get hotel", zap.Error(err))
+			metric.IncResponseCounter("error", op)
+			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
 			render.JSON(w, r, response.Error("failed to get hotel"))
 			return
 		}
+
+		diffTime := time.Since(timeStart)
+		metric.HistogramResponseTimeObserve("success", diffTime.Seconds())
+		metric.IncResponseCounter("success", op)
 		render.JSON(w, r, getHotelResponse{
 			Response: response.OK(),
 			Hotel:    *data,

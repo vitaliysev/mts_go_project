@@ -181,3 +181,84 @@
 {"level":"info","timestamp":"2024-12-15T14:06:48.997+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"log\" password:\"pass\" refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNjM3NTUsInVzZXJuYW1lIjoibG9nIiwicm9sZSI6IkNsaWVudCJ9.l4Mqhzh7D0VIZcMV4UXlKJjoaEo2k3pdpfuXDNU_ZxI\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNjIwMDgsInVzZXJuYW1lIjoibG9nIiwicm9sZSI6IkNsaWVudCJ9.jmiIVQ-DkHC1_tnQpOUDgmmG-Y2HjwTl0P5NDjknfPM\"","duration":0.088929337}
 {"level":"info","timestamp":"2024-12-15T14:07:15.577+0300","msg":"Access granted"}
 {"level":"info","timestamp":"2024-12-15T14:07:15.585+0300","msg":"Found books %d"}
+{"level":"info","timestamp":"2024-12-15T17:13:11.648+0300","msg":"Connected"}
+{"level":"error","timestamp":"2024-12-15T17:13:11.653+0300","msg":"ошибка при вызове:","error":"rpc error: code = Unavailable desc = error reading from server: EOF"}
+{"level":"info","timestamp":"2024-12-15T17:14:07.022+0300","msg":"Connected"}
+{"level":"error","timestamp":"2024-12-15T17:14:07.022+0300","msg":"ошибка при вызове:","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:50054: connect: connection refused\""}
+{"level":"info","timestamp":"2024-12-15T17:17:13.082+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-15T17:17:13.151+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"vital\" password:\"1234\" role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzU4MzMsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.2J7-loJDJpoUoU7SxOlOpQiEafMK3JX6nq6eo3BWycU\"","duration":0.06722788}
+{"level":"info","timestamp":"2024-12-15T17:25:54.980+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-15T17:25:55.045+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"vital\"  password:\"1234\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzYzNTUsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.gESweQ30Qdn0XUv4YJ095I5FqSZ71GMbd72QUO8gVzk\"","duration":0.064169042}
+{"level":"info","timestamp":"2024-12-15T17:32:57.441+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-15T17:32:57.504+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"vital1\"  password:\"1234\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzY3NzcsInVzZXJuYW1lIjoidml0YWwxIiwicm9sZSI6IkhvdGVsaWVyIn0.pgtAjvhF4__pB3M1fAlmVWpMtLKWEtpceAYkE4q4vnA\"","duration":0.062860232}
+{"level":"info","timestamp":"2024-12-15T17:34:15.671+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"vital1\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzY3NzcsInVzZXJuYW1lIjoidml0YWwxIiwicm9sZSI6IkhvdGVsaWVyIn0.pgtAjvhF4__pB3M1fAlmVWpMtLKWEtpceAYkE4q4vnA\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzQ0NTUsInVzZXJuYW1lIjoidml0YWwxIiwicm9sZSI6IkhvdGVsaWVyIn0.DUQWSqPkkqGYhVApk_a4zq3tlt2Ll8TtN_pxJwZ68Ko\"","duration":0.06221182}
+{"level":"error","timestamp":"2024-12-15T17:37:54.894+0300","msg":"rpc error: code = Unavailable desc = error reading from server: EOF","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:37:54.894+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:37:54.894+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"Kaptri","location":"Sevastopol","price":20000},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzQ0NTUsInVzZXJuYW1lIjoidml0YWwxIiwicm9sZSI6IkhvdGVsaWVyIn0.DUQWSqPkkqGYhVApk_a4zq3tlt2Ll8TtN_pxJwZ68Ko"}}
+{"level":"info","timestamp":"2024-12-15T17:37:54.894+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:37:54.894+0300","msg":"","op":"hotel.handlers.save"}
+{"level":"error","timestamp":"2024-12-15T17:37:54.901+0300","msg":"failed to save hotel","op":"hotel.handlers.save","error":"ERROR: column \"username\" of relation \"hotels\" does not exist (SQLSTATE 42703)"}
+{"level":"info","timestamp":"2024-12-15T17:47:10.066+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-15T17:47:10.130+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"vital\"  password:\"1234\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\"","duration":0.063223688}
+{"level":"error","timestamp":"2024-12-15T17:47:19.046+0300","msg":"no rows in result set","method":"/auth_v1.AuthV1/Login","req":"username:\"vital1\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\""}
+{"level":"info","timestamp":"2024-12-15T17:47:19.046+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"vital1\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\"","res":"<nil>","duration":0.001300372}
+{"level":"error","timestamp":"2024-12-15T17:47:19.046+0300","msg":"ошибка при вызове","error":"rpc error: code = Unknown desc = no rows in result set"}
+{"level":"error","timestamp":"2024-12-15T17:47:54.611+0300","msg":"no rows in result set","method":"/auth_v1.AuthV1/Login","req":"username:\"vital1\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\""}
+{"level":"info","timestamp":"2024-12-15T17:47:54.611+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"vital1\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\"","res":"<nil>","duration":0.001117016}
+{"level":"error","timestamp":"2024-12-15T17:47:54.612+0300","msg":"ошибка при вызове","error":"rpc error: code = Unknown desc = no rows in result set"}
+{"level":"info","timestamp":"2024-12-15T17:48:19.597+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"vital\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzUyOTksInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.RcgRT5AJjX1aOaH_NEwdi2fqd7_hq85QGvevzyGKx0c\"","duration":0.05946137}
+{"level":"error","timestamp":"2024-12-15T17:48:34.935+0300","msg":"rpc error: code = Unavailable desc = error reading from server: EOF","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:34.935+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:34.935+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"Kaptri","location":"Sevastopol","price":20000},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzUyOTksInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.RcgRT5AJjX1aOaH_NEwdi2fqd7_hq85QGvevzyGKx0c"}}
+{"level":"info","timestamp":"2024-12-15T17:48:34.935+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:34.935+0300","msg":"","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:34.942+0300","msg":"hotel successfully saved","op":"hotel.handlers.save","hotel":"Kaptri"}
+{"level":"error","timestamp":"2024-12-15T17:48:51.174+0300","msg":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:50055: connect: connection refused\"","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:51.174+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:51.174+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"Mriya","location":"Sevastopol","price":20000},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzUyOTksInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.RcgRT5AJjX1aOaH_NEwdi2fqd7_hq85QGvevzyGKx0c"}}
+{"level":"info","timestamp":"2024-12-15T17:48:51.174+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:51.174+0300","msg":"","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T17:48:51.177+0300","msg":"hotel successfully saved","op":"hotel.handlers.save","hotel":"Mriya"}
+{"level":"info","timestamp":"2024-12-15T17:52:30.266+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-15T17:52:30.327+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"andrey\"  password:\"1234\"  role:\"Client\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc5NTAsInVzZXJuYW1lIjoiYW5kcmV5Iiwicm9sZSI6IkNsaWVudCJ9.QD5E8T6PIpZRgUhw9TLzoLS7p-wIGMBy4Bf2wMbDCbw\"","duration":0.060445111}
+{"level":"info","timestamp":"2024-12-15T17:52:40.127+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"andrey\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc5NTAsInVzZXJuYW1lIjoiYW5kcmV5Iiwicm9sZSI6IkNsaWVudCJ9.QD5E8T6PIpZRgUhw9TLzoLS7p-wIGMBy4Bf2wMbDCbw\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzU1NjAsInVzZXJuYW1lIjoiYW5kcmV5Iiwicm9sZSI6IkNsaWVudCJ9.-jnpHD90WT8Bcrgv9p0QzSzg7C2zF5uKA7DbMUk8Ddw\"","duration":0.058560808}
+{"level":"info","timestamp":"2024-12-15T18:04:42.467+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"vital\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc2MzAsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.LL5-3tqhALTm4NME5RwAIIbfZkqpNZFeYoSvSnCiaVo\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzYyODIsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.hnE_c65iKGBsEiCtYK4qEFwy76o0pW1CmEjLbbXvMEU\"","duration":0.057936263}
+{"level":"info","timestamp":"2024-12-15T18:05:21.928+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:05:21.928+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"Mriya","location":"Sevastopol","price":20000},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzYyODIsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.hnE_c65iKGBsEiCtYK4qEFwy76o0pW1CmEjLbbXvMEU"}}
+{"level":"info","timestamp":"2024-12-15T18:05:21.928+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:05:21.928+0300","msg":"vital","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:05:21.934+0300","msg":"hotel successfully saved","op":"hotel.handlers.save","hotel":"Mriya"}
+{"level":"info","timestamp":"2024-12-15T18:06:11.363+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:06:11.363+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"Kaptri","location":"Sevastopol","price":20000},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzYyODIsInVzZXJuYW1lIjoidml0YWwiLCJyb2xlIjoiSG90ZWxpZXIifQ.hnE_c65iKGBsEiCtYK4qEFwy76o0pW1CmEjLbbXvMEU"}}
+{"level":"info","timestamp":"2024-12-15T18:06:11.363+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:06:11.363+0300","msg":"vital","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:06:11.366+0300","msg":"hotel successfully saved","op":"hotel.handlers.save","hotel":"Kaptri"}
+{"level":"info","timestamp":"2024-12-15T18:06:24.030+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"andrey\"  password:\"1234\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzc5NTAsInVzZXJuYW1lIjoiYW5kcmV5Iiwicm9sZSI6IkNsaWVudCJ9.QD5E8T6PIpZRgUhw9TLzoLS7p-wIGMBy4Bf2wMbDCbw\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQyNzYzODQsInVzZXJuYW1lIjoiYW5kcmV5Iiwicm9sZSI6IkNsaWVudCJ9.2TL8JMSg0h-8V-CJsTpcuml4L7GXqAWKRCiyz1-yvmY\"","duration":0.058697893}
+{"level":"info","timestamp":"2024-12-15T18:06:37.165+0300","msg":"Access granted"}
+{"level":"info","timestamp":"2024-12-15T18:06:37.183+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:06:37.188+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetInfo","req":"id:1","res":"hotel:{name:\"Mriya\" location:\"Sevastopol\" price:20000}","duration":0.004930304}
+{"level":"info","timestamp":"2024-12-15T18:06:37.188+0300","msg":"inserted book with %d","id":1}
+{"level":"info","timestamp":"2024-12-15T18:08:16.900+0300","msg":"Access granted"}
+{"level":"info","timestamp":"2024-12-15T18:08:16.907+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:08:16.909+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetInfo","req":"id:2","res":"hotel:{name:\"Kaptri\" location:\"Sevastopol\" price:20000}","duration":0.001409538}
+{"level":"info","timestamp":"2024-12-15T18:08:16.909+0300","msg":"inserted book with %d","id":2}
+{"level":"info","timestamp":"2024-12-15T18:10:21.656+0300","msg":"Access granted"}
+{"level":"error","timestamp":"2024-12-15T18:10:21.662+0300","msg":"ошибка при вызове GetInfo: %v","error":"rpc error: code = Unavailable desc = error reading from server: EOF"}
+{"level":"info","timestamp":"2024-12-15T18:13:16.809+0300","msg":"Access granted"}
+{"level":"error","timestamp":"2024-12-15T18:13:16.813+0300","msg":"ошибка при вызове GetInfo: %v","error":"rpc error: code = Unavailable desc = error reading from server: EOF"}
+{"level":"info","timestamp":"2024-12-15T18:13:54.999+0300","msg":"Access granted"}
+{"level":"info","timestamp":"2024-12-15T18:13:55.000+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:13:55.005+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetId","req":"username:\"vital\"","res":"id:1 id:2","duration":0.005504261}
+{"level":"info","timestamp":"2024-12-15T18:13:55.014+0300","msg":"Found books %d"}
+{"level":"info","timestamp":"2024-12-15T18:15:13.883+0300","msg":"Access granted"}
+{"level":"info","timestamp":"2024-12-15T18:15:13.884+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:15:13.885+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetId","req":"username:\"vital\"","res":"id:1 id:2","duration":0.001446352}
+{"level":"info","timestamp":"2024-12-15T18:15:13.887+0300","msg":"Found books %d"}
+{"level":"info","timestamp":"2024-12-15T18:15:31.254+0300","msg":"Access granted"}
+{"level":"info","timestamp":"2024-12-15T18:15:31.254+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:15:31.256+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetId","req":"username:\"vital\"","res":"id:1 id:2","duration":0.001407516}
+{"level":"info","timestamp":"2024-12-15T18:15:31.260+0300","msg":"Found books %d"}
+{"level":"info","timestamp":"2024-12-15T18:18:14.436+0300","msg":"Access granted"}
+{"level":"info","timestamp":"2024-12-15T18:18:14.437+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-15T18:18:14.438+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetId","req":"username:\"andrey\"","res":"","duration":0.001475769}
+{"level":"info","timestamp":"2024-12-15T18:18:14.441+0300","msg":"Found books %d"}

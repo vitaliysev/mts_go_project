@@ -11,6 +11,7 @@ import (
 	"github.com/vitaliysev/mts_go_project/internal/booking/client/db/transaction"
 	"github.com/vitaliysev/mts_go_project/internal/booking/closer"
 	config2 "github.com/vitaliysev/mts_go_project/internal/booking/config"
+	"github.com/vitaliysev/mts_go_project/internal/booking/redpanda/producer"
 	"github.com/vitaliysev/mts_go_project/internal/booking/repository"
 	bookRepository "github.com/vitaliysev/mts_go_project/internal/booking/repository/booking"
 	"github.com/vitaliysev/mts_go_project/internal/booking/service"
@@ -137,7 +138,10 @@ func (s *serviceProvider) GRPCBookingImpl(ctx context.Context) *booking_grpc.Imp
 
 func (s *serviceProvider) HTTPBookingImpl(ctx context.Context) *booking_http.Implementation {
 	if s.bookhttpImpl == nil {
-		s.bookhttpImpl = booking_http.NewImplementation(s.BookingService(ctx))
+		topic := "message-sending"
+		brokers := []string{"localhost:19092"}
+		p, _ := producer.New(brokers, topic)
+		s.bookhttpImpl = booking_http.NewImplementation(s.BookingService(ctx), *p)
 	}
 
 	return s.bookhttpImpl

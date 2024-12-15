@@ -2,16 +2,19 @@ package booking_http
 
 import (
 	"github.com/vitaliysev/mts_go_project/internal/booking/model"
+	"github.com/vitaliysev/mts_go_project/internal/booking/redpanda/producer"
 	"github.com/vitaliysev/mts_go_project/internal/booking/service"
 )
 
 type Implementation struct {
 	bookService service.BookService
+	producer    producer.Producer
 }
 
-func NewImplementation(bookService service.BookService) *Implementation {
+func NewImplementation(bookService service.BookService, producer producer.Producer) *Implementation {
 	return &Implementation{
 		bookService: bookService,
+		producer:    producer,
 	}
 }
 

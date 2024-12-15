@@ -3,10 +3,14 @@ package app
 import (
 	"context"
 	"encoding/json"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vitaliysev/mts_go_project/internal/booking/api/booking_http"
 	"github.com/vitaliysev/mts_go_project/internal/booking/closer"
 	"github.com/vitaliysev/mts_go_project/internal/booking/config"
 	"github.com/vitaliysev/mts_go_project/internal/booking/logger"
+	metric "github.com/vitaliysev/mts_go_project/internal/booking/metrics"
+	"github.com/vitaliysev/mts_go_project/internal/booking/redpanda/admin"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 
 	//	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"log"
@@ -43,10 +47,29 @@ func (a *App) Run() error {
 		closer.CloseAll()
 		closer.Wait()
 	}()
+	topic := "message-sending"
+	brokers := []string{"localhost:19092"}
 
+	adm, err := admin.New(brokers)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer adm.Close()
+	ok, err := adm.TopicExists(topic)
+	if !ok {
+		err = adm.CreateTopic(topic)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 	wg := sync.WaitGroup{}
 	wg.Add(3)
-
+	go func() {
+		err := runPrometheus()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 	go func() {
 		defer wg.Done()
 
@@ -76,6 +99,8 @@ func (a *App) initDeps(ctx context.Context) error {
 		a.initServiceProvider,
 		a.initGRPCServer,
 		a.initHTTPServer,
+		a.initTracing,
+		a.initMetrics,
 	}
 
 	for _, f := range inits {
@@ -87,7 +112,14 @@ func (a *App) initDeps(ctx context.Context) error {
 
 	return nil
 }
-
+func (a *App) initMetrics(ctx context.Context) error {
+	err := metric.Init(ctx)
+	return err
+}
+func (a *App) initTracing(ctx context.Context) error {
+	err := tracing.NewTracer("http://localhost:14268/api/traces", "Booking-service")
+	return err
+}
 func (a *App) initConfig(_ context.Context) error {
 	err := config.Load(".env")
 	if err != nil {
@@ -96,7 +128,24 @@ func (a *App) initConfig(_ context.Context) error {
 
 	return nil
 }
+func runPrometheus() error {
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
 
+	prometheusServer := &http.Server{
+		Addr:    "localhost:2300",
+		Handler: mux,
+	}
+
+	log.Printf("Prometheus server is running on %s", "localhost:2300")
+
+	err := prometheusServer.ListenAndServe()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 func (a *App) initServiceProvider(_ context.Context) error {
 	a.serviceProvider = newServiceProvider()
 	return nil

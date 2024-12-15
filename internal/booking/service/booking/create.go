@@ -3,9 +3,12 @@ package booking
 import (
 	"context"
 	"github.com/vitaliysev/mts_go_project/internal/booking/model"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 )
 
 func (s *serv) Create(ctx context.Context, info *model.BookInfo, username string) (int64, error) {
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Service layer")
+	defer span.End()
 	var id int64
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
 		var errTx error

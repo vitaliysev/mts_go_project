@@ -1,6 +1,15 @@
 include .env
 LOCAL_BIN:=$(CURDIR)/bin
 
+MAIN_FILES := cmd/access_service/main.go cmd/auth_service/main.go cmd/booking_service/main.go cmd/hotel_service/main.go cmd/notification_service/main.go
+
+# Правило для запуска всех main.go одновременно
+run:
+	@for file in $(MAIN_FILES); do \
+		echo "Running $$file..."; \
+		go run $$file & \
+	done; \
+	wait
 install-deps:
 	GOBIN=$(LOCAL_BIN) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
 	GOBIN=$(LOCAL_BIN) go install -mod=mod google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.4
@@ -62,6 +71,8 @@ local-migration-booking-down:
 
 local-migration-auth-up:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_AUTH_DIR} postgres ${PG_AUTH_DSN} up -v
+local-migration-auth-down:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_AUTH_DIR} postgres ${PG_AUTH_DSN} down -v
 
 local-migration-hotel-down:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_HOTEL_DIR} postgres ${PG_HOTEL_DSN} down -v

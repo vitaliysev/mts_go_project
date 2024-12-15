@@ -9,6 +9,8 @@ import (
 	"github.com/vitaliysev/mts_go_project/internal/booking/repository"
 	"github.com/vitaliysev/mts_go_project/internal/booking/repository/booking/converter"
 	modelRepo "github.com/vitaliysev/mts_go_project/internal/booking/repository/booking/model"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
+	"go.opentelemetry.io/otel/codes"
 )
 
 const (
@@ -31,6 +33,8 @@ func NewRepository(db db.Client) repository.BookRepository {
 }
 
 func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string) (int64, error) {
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	defer span.End()
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
 		Columns(peroidColumn, hotelIdColumn, usernameColumn).
@@ -39,6 +43,7 @@ func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string
 
 	query, args, err := builder.ToSql()
 	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return 0, err
 	}
 
@@ -50,6 +55,7 @@ func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string
 	var id int64
 	err = r.db.DB().QueryRowContext(ctx, q, args...).Scan(&id)
 	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return 0, err
 	}
 
@@ -57,6 +63,8 @@ func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string
 }
 
 func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	defer span.End()
 	builder := sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
@@ -65,6 +73,7 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
 
 	query, args, err := builder.ToSql()
 	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return nil, err
 	}
 
@@ -76,6 +85,7 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
 	var book modelRepo.Book
 	err = r.db.DB().QueryRowContext(ctx, q, args...).Scan(&book.ID, &book.Info.Period_use, &book.CreatedAt, &book.UpdatedAt, &book.Info.Hotel_id)
 	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return nil, err
 	}
 
@@ -83,6 +93,8 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
 }
 
 func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, username string) ([]*model.Book, error) {
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	defer span.End()
 	var builder sq.SelectBuilder
 	if hotel_id[0] != 0 {
 		builder = sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
@@ -111,6 +123,7 @@ func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, 
 
 	rows, err := r.db.DB().QueryContext(ctx, q, args...)
 	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return nil, err
 	}
 	defer rows.Close()
@@ -119,12 +132,14 @@ func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, 
 	for rows.Next() {
 		var book modelRepo.Book
 		if err := rows.Scan(&book.ID, &book.Info.Period_use, &book.CreatedAt, &book.UpdatedAt, &book.Info.Hotel_id); err != nil {
+			span.SetStatus(codes.Error, err.Error())
 			return nil, err
 		}
 		books = append(books, converter.ToBookFromRepo(&book))
 	}
 
 	if rows.Err() != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return nil, rows.Err()
 	}
 
@@ -132,6 +147,8 @@ func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, 
 }
 
 func (r *repo) Update(ctx context.Context, id int64, info *model.BookInfo) error {
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	defer span.End()
 	builder := sq.Update(tableName).
 		PlaceholderFormat(sq.Dollar).
 		Set(hotelIdColumn, info.Hotel_id).
@@ -150,12 +167,14 @@ func (r *repo) Update(ctx context.Context, id int64, info *model.BookInfo) error
 
 	result, err := r.db.DB().ExecContext(ctx, q, args...)
 	if err != nil {
+		span.SetStatus(codes.Error, err.Error())
 		return err
 	}
 
 	rowsAffected := result.RowsAffected()
 
 	if rowsAffected == 0 {
+		span.SetStatus(codes.Error, err.Error())
 		return fmt.Errorf("no rows updated for id: %d", id)
 	}
 

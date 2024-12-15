@@ -1,0 +1,19 @@
+global:
+  scrape_interval:     2s # Как часто собирать метрики
+  evaluation_interval: 2s # Как часто вычислять правила агрегации и алертинга
+
+rule_files:
+  - "alerts.yml"
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: [ "localhost:9090" ]
+
+  - job_name: "Hotel-service"
+    static_configs:
+      - targets: [ "host.docker.internal:2112" ]
+
+  - job_name: "Booking-service"
+    static_configs:
+      - targets: [ "host.docker.internal:2300" ]

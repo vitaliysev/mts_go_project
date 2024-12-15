@@ -2,9 +2,12 @@ package app
 
 import (
 	"context"
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/vitaliysev/mts_go_project/internal/auth/closer"
 	"github.com/vitaliysev/mts_go_project/internal/auth/config"
+	interceptor2 "github.com/vitaliysev/mts_go_project/internal/auth/interceptor"
 	"github.com/vitaliysev/mts_go_project/internal/auth/logger/interceptor"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 	"google.golang.org/grpc/credentials/insecure"
 
 	//	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -65,6 +68,7 @@ func (a *App) initDeps(ctx context.Context) error {
 		a.initConfig,
 		a.initServiceProvider,
 		a.initGRPCAuthServer,
+		a.initTracing,
 	}
 	logger.Init(getCore(getAtomicLevel()))
 	for _, f := range inits {
@@ -76,7 +80,10 @@ func (a *App) initDeps(ctx context.Context) error {
 
 	return nil
 }
-
+func (a *App) initTracing(ctx context.Context) error {
+	err := tracing.NewTracer("http://localhost:14268/api/traces", "Auth-service")
+	return err
+}
 func (a *App) initConfig(_ context.Context) error {
 	err := config.Load(".env")
 	if err != nil {
@@ -94,7 +101,8 @@ func (a *App) initServiceProvider(_ context.Context) error {
 func (a *App) initGRPCAuthServer(ctx context.Context) error {
 	a.grpcServer = grpc.NewServer(
 		grpc.Creds(insecure.NewCredentials()),
-		grpc.UnaryInterceptor(interceptor.LogInterceptor),
+		grpc.UnaryInterceptor(grpcMiddleware.ChainUnaryServer(interceptor.LogInterceptor,
+			interceptor2.ServerTracingInterceptor)),
 	)
 
 	reflection.Register(a.grpcServer)

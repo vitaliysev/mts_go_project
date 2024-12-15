@@ -2,11 +2,12 @@ package hotel
 
 import (
 	"context"
-	"fmt"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 )
 
 func (s *serv) GetId(ctx context.Context, username string) (*[]int64, error) {
-	fmt.Println("bbbbbbbb")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Service-layer")
+	defer span.End()
 	data, err := s.hotelRepository.GetId(ctx, username)
 	if err != nil {
 		return nil, err

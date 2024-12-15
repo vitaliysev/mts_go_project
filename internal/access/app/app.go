@@ -2,8 +2,11 @@ package app
 
 import (
 	"context"
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/vitaliysev/mts_go_project/internal/access/closer"
 	"github.com/vitaliysev/mts_go_project/internal/access/config"
+	"github.com/vitaliysev/mts_go_project/internal/access/interceptor"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 
 	//	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"log"
@@ -63,6 +66,7 @@ func (a *App) initDeps(ctx context.Context) error {
 		a.initConfig,
 		a.initServiceProvider,
 		a.initGRPCAccessServer,
+		a.initTracing,
 	}
 
 	for _, f := range inits {
@@ -74,7 +78,10 @@ func (a *App) initDeps(ctx context.Context) error {
 
 	return nil
 }
-
+func (a *App) initTracing(ctx context.Context) error {
+	err := tracing.NewTracer("http://localhost:14268/api/traces", "Access-service")
+	return err
+}
 func (a *App) initConfig(_ context.Context) error {
 	err := config.Load(".env")
 	if err != nil {
@@ -90,7 +97,8 @@ func (a *App) initServiceProvider(_ context.Context) error {
 }
 
 func (a *App) initGRPCAccessServer(ctx context.Context) error {
-	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()))
+	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()), grpc.UnaryInterceptor(grpcMiddleware.ChainUnaryServer(
+		interceptor.ServerTracingInterceptor)))
 
 	reflection.Register(a.grpcServer)
 

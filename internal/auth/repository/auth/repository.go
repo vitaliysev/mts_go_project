@@ -8,6 +8,7 @@ import (
 	modelRepo "github.com/vitaliysev/mts_go_project/internal/auth/model"
 	"github.com/vitaliysev/mts_go_project/internal/auth/repository"
 	"github.com/vitaliysev/mts_go_project/internal/auth/repository/auth/converter"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 )
 
 const (
@@ -27,6 +28,8 @@ func NewRepository(db db.Client) repository.AuthRepository {
 }
 
 func (r *repo) Create(ctx context.Context, info *modelRepo.AuthInfo) (string, error) {
+	ctx, span := tracing.Tracer.Tracer("Auth-service").Start(ctx, "Auth.Repo.Create")
+	defer span.End()
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
 		Columns(loginColumn, passwordColumn, roleColumn).
@@ -53,6 +56,8 @@ func (r *repo) Create(ctx context.Context, info *modelRepo.AuthInfo) (string, er
 }
 
 func (r *repo) Get(ctx context.Context, login string) (*modelRepo.Auth, error) {
+	ctx, span := tracing.Tracer.Tracer("Auth-service").Start(ctx, "Auth.Repo.Get")
+	defer span.End()
 	builder := sq.Select(loginColumn, passwordColumn, roleColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
