@@ -1,0 +1,423 @@
+basePath: /
+definitions:
+  github_com_vitaliysev_mts_go_project_internal_booking_model.Book:
+    description: Book represents a book in the booking system
+    properties:
+      create_time:
+        type: string
+      id:
+        type: integer
+      info:
+        $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_booking_model.BookInfo'
+      update_time:
+        $ref: '#/definitions/sql.NullTime'
+    type: object
+  github_com_vitaliysev_mts_go_project_internal_booking_model.BookInfo:
+    properties:
+      hotel_id:
+        type: integer
+      period_use:
+        type: string
+    type: object
+  hotel.ErrorResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: Invalid request
+        type: string
+    type: object
+  hotel.GetHotelRequest:
+    properties:
+      access_token:
+        type: string
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  hotel.GetHotelResponse:
+    properties:
+      error:
+        type: string
+      id:
+        type: integer
+      info:
+        $ref: '#/definitions/model.HotelInfo'
+      status:
+        type: string
+    required:
+    - id
+    type: object
+  hotel.GetHotelsRequest:
+    properties:
+      access_token:
+        type: string
+    type: object
+  hotel.GetHotelsResponse:
+    properties:
+      error:
+        type: string
+      hotels:
+        items:
+          $ref: '#/definitions/model.Hotel'
+        type: array
+      status:
+        type: string
+    type: object
+  hotel.Response:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+  hotel.SaveHotelRequest:
+    properties:
+      access_token:
+        type: string
+      info:
+        $ref: '#/definitions/model.HotelInfo'
+    type: object
+  hotel.UpdateRequest:
+    properties:
+      access_token:
+        type: string
+      info:
+        $ref: '#/definitions/model.Hotel'
+    type: object
+  hotel.updateResponse:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+  internal_booking_app.CreateBookingRequest:
+    properties:
+      access_token:
+        type: string
+      info:
+        $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_booking_model.BookInfo'
+    type: object
+  internal_booking_app.CreateBookingResponse:
+    properties:
+      cost:
+        type: integer
+      id:
+        type: integer
+      location:
+        type: string
+      period:
+        type: integer
+      title:
+        type: string
+    type: object
+  internal_booking_app.ErrorResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: Invalid request
+        type: string
+    type: object
+  internal_booking_app.GetBookingRequest:
+    description: GetBookingRequest contains a info for get
+    properties:
+      access_token:
+        type: string
+      id:
+        type: integer
+      path:
+        type: string
+    type: object
+  internal_booking_app.GetBookingResponse:
+    description: GetBookingResponse contains a list of booking information.
+    properties:
+      info:
+        items:
+          $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_booking_model.Book'
+        type: array
+    type: object
+  internal_booking_app.GetRefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  internal_booking_app.GetRefreshTokenResponse:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  internal_booking_app.LoginClientRequest:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  internal_booking_app.LoginClientResponse:
+    properties:
+      access_token:
+        type: string
+    type: object
+  internal_booking_app.SigninClientRequest:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+    type: object
+  internal_booking_app.SigninClientResponse:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  model.Hotel:
+    properties:
+      id:
+        type: integer
+      info:
+        $ref: '#/definitions/model.HotelInfo'
+    required:
+    - id
+    type: object
+  model.HotelInfo:
+    properties:
+      location:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    required:
+    - location
+    - name
+    - price
+    type: object
+  sql.NullTime:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: GetBookingResponse contains a list of booking information.
+  title: Booking API
+  version: "1.0"
+paths:
+  /booking/v1/create:
+    post:
+      consumes:
+      - application/json
+      description: Создание нового бронирования используя HTTP API.
+      parameters:
+      - description: Booking Data
+        in: body
+        name: bookingBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_booking_app.CreateBookingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Booking created successfully
+          schema:
+            $ref: '#/definitions/internal_booking_app.CreateBookingResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+      summary: Создание нового бронирования
+      tags:
+      - Booking
+  /booking/v1/getrefr:
+    patch:
+      consumes:
+      - application/json
+      description: Обновление RefreshToken используя HTTP API.
+      parameters:
+      - description: Auth Data
+        in: body
+        name: bookingBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_booking_app.GetRefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Refresh token got succesfully
+          schema:
+            $ref: '#/definitions/internal_booking_app.GetRefreshTokenResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+      summary: Обновление RefreshToken
+      tags:
+      - Booking
+  /booking/v1/listCl:
+    post:
+      consumes:
+      - application/json
+      description: Получение бронирований отелей клиента используя HTTP API.
+      parameters:
+      - description: Booking Data
+        in: body
+        name: bookingBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_booking_app.GetBookingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bookings listed successfully
+          schema:
+            $ref: '#/definitions/internal_booking_app.GetBookingResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+      summary: Получение бронирований отелей клиента
+      tags:
+      - Booking
+  /booking/v1/listHo:
+    post:
+      consumes:
+      - application/json
+      description: Получение бронирований отелей владельца используя HTTP API.
+      parameters:
+      - description: Booking Data
+        in: body
+        name: bookingBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_booking_app.GetBookingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bookings listed successfully
+          schema:
+            $ref: '#/definitions/internal_booking_app.GetBookingResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+      summary: Получение бронирований отелей владельца
+      tags:
+      - Booking
+  /booking/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Вход используя HTTP API.
+      parameters:
+      - description: Access Data
+        in: body
+        name: bookingBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_booking_app.LoginClientRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Access if succesful
+          schema:
+            $ref: '#/definitions/internal_booking_app.LoginClientResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+      summary: Обновление RefreshToken
+      tags:
+      - Booking
+  /booking/v1/signin:
+    post:
+      consumes:
+      - application/json
+      description: Регистрация используя HTTP API.
+      parameters:
+      - description: Auth Data
+        in: body
+        name: bookingBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_booking_app.SigninClientRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Authentication is succesful
+          schema:
+            $ref: '#/definitions/internal_booking_app.SigninClientResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_booking_app.ErrorResponse'
+      summary: Регистрация
+      tags:
+      - Booking
+swagger: "2.0"

@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// @description Book represents a book in the booking system
 type Book struct {
 	ID        int64        `json:"id"`
 	Info      BookInfo     `json:"info"`

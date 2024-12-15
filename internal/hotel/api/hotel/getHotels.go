@@ -19,14 +19,36 @@ import (
 	"time"
 )
 
-type getHotelsRequest struct {
+type GetHotelsRequest struct {
 	Access_token string `json:"access_token"`
 }
+
+// @description Response contains a list of hotel information.
 type getHotelsResponse struct {
-	response.Response
+	response.Response `json:",inline"`
+	Hotels            []model.Hotel `json:"hotels"`
+}
+type Response struct {
+	Status string `json:"status"`
+	Error  string `json:"error,omitempty"`
+}
+type GetHotelsResponse struct {
+	Response
 	Hotels []model.Hotel `json:"hotels"`
 }
 
+// NewGetHotels Получение всех отелей отеля.
+// @Summary Получение всех отелей отеля
+// @Description Получение всех отелей используя HTTP API.
+// @Tags Hotel
+// @Accept json
+// @Produce json
+// @Param hotelBody body GetHotelsRequest true "Hotel Data"
+// @Success 200 {object} GetHotelsResponse "Hotels got successfully"
+// @Failure 400 {object} ErrorResponse "Invalid request body"
+// @Failure 405 {object} ErrorResponse "Method not allowed"
+// @Failure 500 {object} ErrorResponse "Internal server error"
+// @Router /getHotels [post]
 func NewGetHotels(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "hotel.handlers.get.New"
@@ -41,7 +63,7 @@ func NewGetHotels(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 		ctx = metadata.AppendToOutgoingContext(ctx, "x-trace-id", traceId)
 
 		metric.IncRequestCounter()
-		var req getHotelsRequest
+		var req GetHotelsRequest
 		err := render.DecodeJSON(r.Body, &req)
 
 		accessToken := req.Access_token

@@ -29,6 +29,25 @@ type SaveResponse struct {
 	response.Response
 }
 
+// ErrorResponse represents a standard error response.
+type ErrorResponse struct {
+	Code    int    `json:"code" example:"400"`
+	Message string `json:"message" example:"Invalid request"`
+}
+
+// Save Создание нового отеля.
+// @Summary Создание нового отеля
+// @SecurityApiKeyAuth
+// @Description Создание нового отеля используя HTTP API.
+// @Tags Hotel
+// @Accept json
+// @Produce json
+// @Param hotelBody body SaveHotelRequest true "Hotel Data"
+// @Success 200 {object} Response "Hotel saved successfully"
+// @Failure 400 {object} ErrorResponse "Invalid request body"
+// @Failure 405 {object} ErrorResponse "Method not allowed"
+// @Failure 500 {object} ErrorResponse "Internal server error"
+// @Router /saveHotel [post]
 func NewSave(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "hotel.handlers.save"

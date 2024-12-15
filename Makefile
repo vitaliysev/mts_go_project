@@ -15,17 +15,27 @@ install-deps:
 	GOBIN=$(LOCAL_BIN) go install -mod=mod google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.4
 	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@v3.20.0
 	GOBIN=$(LOCAL_BIN) go install github.com/envoyproxy/protoc-gen-validate@v1.0.4
-	GOBIN=$(LOCAL_BIN) go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.20.0
-	GOBIN=$(LOCAL_BIN) go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.20.0
+	GOBIN=$(LOCAL_BIN) go install github.com/swaggo/swag/cmd/swag
+	GOBIN=$(LOCAL_BIN) go install github.com/swaggo/http-swagger
+	GOBIN=$(LOCAL_BIN) go install github.com/rakyll/statik@v0.1.7
 
 get-deps:
 	go get -u google.golang.org/protobuf/cmd/protoc-gen-go
 	go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 generate:
-	mkdir -p pkg/swagger
-	make generate-booking-api
-	make generate-hotel-api
+	mkdir -p pkg/swagger/hotel pkg/swagger/booking
+	$(LOCAL_BIN)/swag init --parseDependency -o pkg/swagger/hotel -g /internal/hotel/app/app.go
+	$(LOCAL_BIN)/swag init --parseDependency -o pkg/swagger/booking -g /internal/booking/app/app.go
+
+take-swagger:
+	take-swagger-booking
+	take-swagger-hotel
+
+take-swagger-booking:
+	$(LOCAL_BIN)/statik -src=pkg/swagger/booking/ -include='*.css,*.html,*.js,*.json,*.png' -dest=statik/booking
+take-swagger-hotel:
+	$(LOCAL_BIN)/statik -src=pkg/swagger/hotel/ -include='*.css,*.html,*.js,*.json,*.png' -dest=statik/hotel
 
 generate-booking-api:
 	mkdir -p pkg/booking_v1
@@ -56,7 +66,6 @@ generate-hotel-api:
 	--openapiv2_out=allow_merge=true,merge_file_name=api:pkg/swagger \
 	--plugin=protoc-gen-openapiv2=bin/protoc-gen-openapiv2 \
 	api/hotel_v1/hotel.proto
-
 local-migration-status:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} status -v
 
@@ -76,6 +85,16 @@ local-migration-auth-down:
 
 local-migration-hotel-down:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_HOTEL_DIR} postgres ${PG_HOTEL_DSN} down -v
+
+local-migration-up:
+	local-migration-hotel-up
+	local-migration-booking-up
+	local-migration-auth-up
+
+local-migration-down:
+	local-migration-hotel-down
+	local-migration-booking-down
+	local-migration-auth-down
 
 vendor-proto:
 		@if [ ! -d vendor.protogen/validate ]; then \

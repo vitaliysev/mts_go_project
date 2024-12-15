@@ -20,15 +20,27 @@ import (
 	"time"
 )
 
-type getHotelRequest struct {
+type GetHotelRequest struct {
 	ID           int64  `json:"id" validate:"required"`
 	Access_token string `json:"access_token"`
 }
-type getHotelResponse struct {
+type GetHotelResponse struct {
 	response.Response
 	model.Hotel
 }
 
+// NewGetHotel Получение одного отеля.
+// @Summary Получение одного отеля
+// @Description Получение одного отеля используя HTTP API.
+// @Tags Hotel
+// @Accept json
+// @Produce json
+// @Param hotelBody body GetHotelRequest true "Hotel Data"
+// @Success 200 {object} GetHotelResponse "Hotel got successfully"
+// @Failure 400 {object} ErrorResponse "Invalid request body"
+// @Failure 405 {object} ErrorResponse "Method not allowed"
+// @Failure 500 {object} ErrorResponse "Internal server error"
+// @Router /getHotel [post]
 func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "hotel.handlers.get.New"
@@ -42,7 +54,7 @@ func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 		)
 		metric.IncRequestCounter()
 
-		var req getHotelRequest
+		var req GetHotelRequest
 		err := render.DecodeJSON(r.Body, &req)
 		accessToken := req.Access_token
 
@@ -106,7 +118,7 @@ func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 		diffTime := time.Since(timeStart)
 		metric.HistogramResponseTimeObserve("success", diffTime.Seconds())
 		metric.IncResponseCounter("success", op)
-		render.JSON(w, r, getHotelResponse{
+		render.JSON(w, r, GetHotelResponse{
 			Response: response.OK(),
 			Hotel:    *data,
 		})

@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// @description Response contains a data with information.
 type Response struct {
 	Status string `json:"status"`
 	Error  string `json:"error,omitempty"`

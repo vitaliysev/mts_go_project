@@ -51,12 +51,14 @@ type LoginClientResponse struct {
 	Access_token string `json:"access_token"`
 }
 
+// @description GetBookingRequest contains a info for get
 type GetBookingRequest struct {
 	ID           int64  `json:"id"`
 	Access_token string `json:"access_token"`
 	Path         string
 }
 
+// @description GetBookingResponse contains a list of booking information.
 type GetBookingResponse struct {
 	Info []*model.Book `json:"info"`
 }

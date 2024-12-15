@@ -262,3 +262,125 @@
 {"level":"info","timestamp":"2024-12-15T18:18:14.437+0300","msg":"getting hotel info...","op":"hotel.handlers.save"}
 {"level":"info","timestamp":"2024-12-15T18:18:14.438+0300","msg":"requested successfully","method":"/hotel_v1.HotelV1/GetId","req":"username:\"andrey\"","res":"","duration":0.001475769}
 {"level":"info","timestamp":"2024-12-15T18:18:14.441+0300","msg":"Found books %d"}
+{"level":"info","timestamp":"2024-12-15T23:45:04.479+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:34:51.441+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:36:48.870+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:38:22.899+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:38:25.167+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:38:36.647+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:10.477+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:19.108+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:44.058+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:45.081+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:46.141+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:46.796+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:47.361+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:47.502+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:47.636+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:47.778+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:39:55.002+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:05.231+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:17.753+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:18.605+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:38.190+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:39.040+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:55.777+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:57.557+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:40:58.707+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:41:57.658+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:42:00.281+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:42:29.807+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T00:42:29.918+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"string\"  password:\"string\"  role:\"string\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDI1NDksInVzZXJuYW1lIjoic3RyaW5nIiwicm9sZSI6InN0cmluZyJ9.3QdnBPY3Zh3wV8HJ0ZfTTQM6MnCRAi7mbMWhN8h-tfE\"","duration":0.109654969}
+{"level":"info","timestamp":"2024-12-16T00:42:52.184+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:42:53.166+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:43:23.859+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:43:27.301+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:44:36.574+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:44:38.149+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:44:38.423+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:09.586+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:19.686+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:20.303+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:20.484+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:20.708+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:20.926+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:45:37.751+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:46:13.074+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:46:13.771+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:49:44.839+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:50:31.035+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:50:32.705+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:50:33.692+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:51:57.424+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:51:59.532+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:51:59.743+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:51:59.952+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:53:13.348+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T00:55:25.567+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:02:46.066+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T01:02:46.253+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"string\"  password:\"string\"  role:\"string\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDM3NjYsInVzZXJuYW1lIjoic3RyaW5nIiwicm9sZSI6InN0cmluZyJ9.t02iLZ5Ufmo9uWRlpZmyRU-2dHkmWPmPnAsu6wPonWA\"","duration":0.175619195}
+{"level":"info","timestamp":"2024-12-16T01:09:48.044+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:09:53.106+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T01:09:53.287+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"string\"  password:\"string\"  role:\"string\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDQxOTMsInVzZXJuYW1lIjoic3RyaW5nIiwicm9sZSI6InN0cmluZyJ9.1MYNHrJjj7KXwBG2sK8yfMmIF5xBrmhMtTCB9v8VuTA\"","duration":0.171379786}
+{"level":"info","timestamp":"2024-12-16T01:23:54.333+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:24:40.518+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:25:49.282+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:26:32.233+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:26:41.967+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:32:24.599+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:33:03.206+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:33:05.287+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:33:09.042+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:36:04.476+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:40:54.936+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:41:20.224+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:41:21.060+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:41:21.879+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:41:24.363+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:41:26.695+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:43:17.573+0300","msg":"Serving swagger file: /api.booking.api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:45:16.415+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:45:25.315+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:48:01.183+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:48:53.764+0300","msg":"Serving swagger file: /api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:49:31.923+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:49:49.574+0300","msg":"Connected"}
+{"level":"error","timestamp":"2024-12-16T01:49:49.575+0300","msg":"ошибка при вызове:","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:50054: connect: connection refused\""}
+{"level":"info","timestamp":"2024-12-16T01:49:49.579+0300","msg":"Connected"}
+{"level":"error","timestamp":"2024-12-16T01:49:49.583+0300","msg":"ошибка при вызове:","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:50054: connect: connection refused\""}
+{"level":"info","timestamp":"2024-12-16T01:50:02.798+0300","msg":"Serving swagger file: /api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:50:07.224+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T01:51:02.446+0300","msg":"Connected"}
+{"level":"error","timestamp":"2024-12-16T01:51:02.446+0300","msg":"ошибка при вызове:","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:50054: connect: connection refused\""}
+{"level":"info","timestamp":"2024-12-16T01:51:02.449+0300","msg":"Connected"}
+{"level":"error","timestamp":"2024-12-16T01:51:02.449+0300","msg":"ошибка при вызове:","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:50054: connect: connection refused\""}
+{"level":"info","timestamp":"2024-12-16T01:51:25.000+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T01:51:25.148+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"string\"  password:\"string\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDY2ODUsInVzZXJuYW1lIjoic3RyaW5nIiwicm9sZSI6IkhvdGVsaWVyIn0.mFwVAmu832dQe7GhZRx5qh3xa7WAAcrnV43JX06qnmU\"","duration":0.143624151}
+{"level":"info","timestamp":"2024-12-16T02:06:29.348+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T02:06:31.911+0300","msg":"Serving swagger file: /api.hotel.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T02:06:38.029+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T02:07:02.740+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T02:07:02.899+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"str\"  password:\"string\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc2MjIsInVzZXJuYW1lIjoic3RyIiwicm9sZSI6IkhvdGVsaWVyIn0.QX79jlip87H1zNCo9DFEoEKQ3Q_bnq2H3YgeFehmgcg\"","duration":0.156622568}
+{"level":"error","timestamp":"2024-12-16T02:07:16.853+0300","msg":"ERROR: relation \"auth\" does not exist (SQLSTATE 42P01)","method":"/auth_v1.AuthV1/Login","req":"username:\"str\"  password:\"string\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc2MjIsInVzZXJuYW1lIjoic3RyIiwicm9sZSI6IkhvdGVsaWVyIn0.QX79jlip87H1zNCo9DFEoEKQ3Q_bnq2H3YgeFehmgcg\""}
+{"level":"info","timestamp":"2024-12-16T02:07:16.854+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"str\"  password:\"string\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc2MjIsInVzZXJuYW1lIjoic3RyIiwicm9sZSI6IkhvdGVsaWVyIn0.QX79jlip87H1zNCo9DFEoEKQ3Q_bnq2H3YgeFehmgcg\"","res":"<nil>","duration":0.005755454}
+{"level":"error","timestamp":"2024-12-16T02:07:16.855+0300","msg":"ошибка при вызове","error":"rpc error: code = Unknown desc = ERROR: relation \"auth\" does not exist (SQLSTATE 42P01)"}
+{"level":"error","timestamp":"2024-12-16T02:07:16.890+0300","msg":"ERROR: relation \"auth\" does not exist (SQLSTATE 42P01)","method":"/auth_v1.AuthV1/Login","req":"username:\"str\"  password:\"string\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc2MjIsInVzZXJuYW1lIjoic3RyIiwicm9sZSI6IkhvdGVsaWVyIn0.QX79jlip87H1zNCo9DFEoEKQ3Q_bnq2H3YgeFehmgcg\""}
+{"level":"info","timestamp":"2024-12-16T02:07:16.890+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"str\"  password:\"string\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc2MjIsInVzZXJuYW1lIjoic3RyIiwicm9sZSI6IkhvdGVsaWVyIn0.QX79jlip87H1zNCo9DFEoEKQ3Q_bnq2H3YgeFehmgcg\"","res":"<nil>","duration":0.019275246}
+{"level":"error","timestamp":"2024-12-16T02:07:16.891+0300","msg":"ошибка при вызове","error":"rpc error: code = Unknown desc = ERROR: relation \"auth\" does not exist (SQLSTATE 42P01)"}
+{"level":"info","timestamp":"2024-12-16T02:11:56.672+0300","msg":"Serving swagger file: /api.booking.swagger.json"}
+{"level":"info","timestamp":"2024-12-16T02:12:14.483+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T02:12:14.693+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"nado\"  password:\"string\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc5MzQsInVzZXJuYW1lIjoibmFkbyIsInJvbGUiOiJIb3RlbGllciJ9.FWFcYs3hXXpv0g-B2nflgQT2wMeqzthSAOIhoKzzX-Q\"","duration":0.205680451}
+{"level":"info","timestamp":"2024-12-16T02:12:39.684+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"nado\"  password:\"string\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDc5MzQsInVzZXJuYW1lIjoibmFkbyIsInJvbGUiOiJIb3RlbGllciJ9.FWFcYs3hXXpv0g-B2nflgQT2wMeqzthSAOIhoKzzX-Q\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDU1NTksInVzZXJuYW1lIjoibmFkbyIsInJvbGUiOiJIb3RlbGllciJ9.U5Oquc-0-Lozq8we-GWJ2yD9Ms7lEjr-4sB7Krvbj_E\"","duration":0.151034414}
+{"level":"info","timestamp":"2024-12-16T02:13:20.097+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-16T02:13:20.097+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"string","location":"string","price":100},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDU1NTksInVzZXJuYW1lIjoibmFkbyIsInJvbGUiOiJIb3RlbGllciJ9.U5Oquc-0-Lozq8we-GWJ2yD9Ms7lEjr-4sB7Krvbj_E"}}
+{"level":"info","timestamp":"2024-12-16T02:13:20.098+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-16T02:13:20.098+0300","msg":"nado","op":"hotel.handlers.save"}
+{"level":"error","timestamp":"2024-12-16T02:13:20.110+0300","msg":"failed to save hotel","op":"hotel.handlers.save","error":"ERROR: column \"username\" of relation \"hotels\" does not exist (SQLSTATE 42703)"}
+{"level":"info","timestamp":"2024-12-16T02:14:34.344+0300","msg":"Connected"}
+{"level":"info","timestamp":"2024-12-16T02:14:34.514+0300","msg":"request","method":"/auth_v1.AuthV1/Signin","req":"username:\"nad\"  password:\"string\"  role:\"Hotelier\"","res":"refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDgwNzQsInVzZXJuYW1lIjoibmFkIiwicm9sZSI6IkhvdGVsaWVyIn0.1zpbSu6h-xUXaStOI8sJE3m-AhcfG6V72HlejRyliAg\"","duration":0.168316002}
+{"level":"info","timestamp":"2024-12-16T02:14:49.754+0300","msg":"request","method":"/auth_v1.AuthV1/Login","req":"username:\"nad\"  password:\"string\"  refresh_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDgwNzQsInVzZXJuYW1lIjoibmFkIiwicm9sZSI6IkhvdGVsaWVyIn0.1zpbSu6h-xUXaStOI8sJE3m-AhcfG6V72HlejRyliAg\"","res":"access_token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDU2ODksInVzZXJuYW1lIjoibmFkIiwicm9sZSI6IkhvdGVsaWVyIn0.rQkpC-5JWV3jNpYPaxkAH9dbkU9HTK0KvInjg0TIUqc\"","duration":0.148096749}
+{"level":"info","timestamp":"2024-12-16T02:15:09.517+0300","msg":"decoding request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-16T02:15:09.517+0300","msg":"request body decoded","op":"hotel.handlers.save","request":{"info":{"name":"string","location":"string","price":100},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQzMDU2ODksInVzZXJuYW1lIjoibmFkIiwicm9sZSI6IkhvdGVsaWVyIn0.rQkpC-5JWV3jNpYPaxkAH9dbkU9HTK0KvInjg0TIUqc"}}
+{"level":"info","timestamp":"2024-12-16T02:15:09.517+0300","msg":"validating request body...","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-16T02:15:09.518+0300","msg":"nad","op":"hotel.handlers.save"}
+{"level":"info","timestamp":"2024-12-16T02:15:09.546+0300","msg":"hotel successfully saved","op":"hotel.handlers.save","hotel":"string"}

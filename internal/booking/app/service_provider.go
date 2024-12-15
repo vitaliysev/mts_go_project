@@ -12,6 +12,7 @@ import (
 	"github.com/vitaliysev/mts_go_project/internal/booking/closer"
 	config2 "github.com/vitaliysev/mts_go_project/internal/booking/config"
 	"github.com/vitaliysev/mts_go_project/internal/booking/redpanda/producer"
+
 	"github.com/vitaliysev/mts_go_project/internal/booking/repository"
 	bookRepository "github.com/vitaliysev/mts_go_project/internal/booking/repository/booking"
 	"github.com/vitaliysev/mts_go_project/internal/booking/service"
@@ -25,9 +26,10 @@ import (
 var logLevel = flag.String("l", "info", "log level")
 
 type serviceProvider struct {
-	pgConfig   config2.PGConfig
-	grpcConfig config2.GRPCConfig
-	httpConfig config2.HTTPConfig
+	pgConfig      config2.PGConfig
+	grpcConfig    config2.GRPCConfig
+	httpConfig    config2.HTTPConfig
+	swaggerConfig config2.SwaggerConfig
 
 	dbClient       db.Client
 	txManager      db.TxManager
@@ -115,6 +117,19 @@ func (s *serviceProvider) BookingRepository(ctx context.Context) repository.Book
 	}
 
 	return s.bookRepository
+}
+
+func (s *serviceProvider) SwaggerConfig() config2.SwaggerConfig {
+	if s.swaggerConfig == nil {
+		cfg, err := config2.NewSwaggerConfig()
+		if err != nil {
+			log.Fatalf("failed to get swagger config: %s", err.Error())
+		}
+
+		s.swaggerConfig = cfg
+	}
+
+	return s.swaggerConfig
 }
 
 func (s *serviceProvider) BookingService(ctx context.Context) service.BookService {

@@ -29,6 +29,23 @@ type UpdateResponse struct {
 	response.Response
 }
 
+type updateResponse struct {
+	Response
+}
+
+// NewUpdate Обновление отеля.
+// @Summary Обновление отеля
+// @SecurityApiKeyAuth
+// @Description Обновление отеля используя HTTP API.
+// @Tags Hotel
+// @Accept json
+// @Produce json
+// @Param hotelBody body UpdateRequest true "Hotel Data"
+// @Success 200 {object} updateResponse "Hotel updated successfully"
+// @Failure 400 {object} ErrorResponse "Invalid request body"
+// @Failure 405 {object} ErrorResponse "Method not allowed"
+// @Failure 500 {object} ErrorResponse "Internal server error"
+// @Router /updateHotel [put]
 func NewUpdate(ctx context.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "hotel.handlers.update.New"

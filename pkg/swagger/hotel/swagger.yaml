@@ -1,0 +1,203 @@
+basePath: /hotel
+definitions:
+  github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.Hotel:
+    properties:
+      id:
+        type: integer
+      info:
+        $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.HotelInfo'
+    required:
+    - id
+    type: object
+  github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.HotelInfo:
+    properties:
+      location:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    required:
+    - location
+    - name
+    - price
+    type: object
+  internal_hotel_api_hotel.ErrorResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: Invalid request
+        type: string
+    type: object
+  internal_hotel_api_hotel.GetHotelRequest:
+    properties:
+      access_token:
+        type: string
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  internal_hotel_api_hotel.GetHotelResponse:
+    properties:
+      error:
+        type: string
+      id:
+        type: integer
+      info:
+        $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.HotelInfo'
+      status:
+        type: string
+    required:
+    - id
+    type: object
+  internal_hotel_api_hotel.GetHotelsRequest:
+    properties:
+      access_token:
+        type: string
+    type: object
+  internal_hotel_api_hotel.GetHotelsResponse:
+    properties:
+      error:
+        type: string
+      hotels:
+        items:
+          $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.Hotel'
+        type: array
+      status:
+        type: string
+    type: object
+  internal_hotel_api_hotel.Response:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+  internal_hotel_api_hotel.SaveHotelRequest:
+    properties:
+      access_token:
+        type: string
+      info:
+        $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.HotelInfo'
+    type: object
+  internal_hotel_api_hotel.UpdateRequest:
+    properties:
+      access_token:
+        type: string
+      info:
+        $ref: '#/definitions/github_com_vitaliysev_mts_go_project_internal_hotel_api_hotel_model.Hotel'
+    type: object
+  internal_hotel_api_hotel.updateResponse:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+  model.Book:
+    description: Book represents a book in the booking system
+    properties:
+      create_time:
+        type: string
+      id:
+        type: integer
+      info:
+        $ref: '#/definitions/model.BookInfo'
+      update_time:
+        $ref: '#/definitions/sql.NullTime'
+    type: object
+  model.BookInfo:
+    properties:
+      hotel_id:
+        type: integer
+      period_use:
+        type: string
+    type: object
+  sql.NullTime:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+host: localhost:50052
+info:
+  contact: {}
+  description: This API provides hotel-related operations such as creating a booking,
+    listing clients, etc.
+  title: Hotel API
+  version: "1.0"
+paths:
+  /saveHotel:
+    post:
+      consumes:
+      - application/json
+      description: Создание нового отеля используя HTTP API.
+      parameters:
+      - description: Hotel Data
+        in: body
+        name: hotelBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_hotel_api_hotel.SaveHotelRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hotel saved successfully
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.Response'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.ErrorResponse'
+      summary: Создание нового отеля
+      tags:
+      - Hotel
+  /updateHotel:
+    put:
+      consumes:
+      - application/json
+      description: Обновление отеля используя HTTP API.
+      parameters:
+      - description: Hotel Data
+        in: body
+        name: hotelBody
+        required: true
+        schema:
+          $ref: '#/definitions/internal_hotel_api_hotel.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hotel updated successfully
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.updateResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.ErrorResponse'
+        "405":
+          description: Method not allowed
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_hotel_api_hotel.ErrorResponse'
+      summary: Обновление отеля
+      tags:
+      - Hotel
+swagger: "2.0"

@@ -14,9 +14,10 @@ import (
 )
 
 type serviceProvider struct {
-	pgConfig   config.PGConfig
-	grpcConfig config.GRPCConfig
-	restConfig config.RESTConfig
+	pgConfig      config.PGConfig
+	grpcConfig    config.GRPCConfig
+	restConfig    config.RESTConfig
+	swaggerConfig config.SwaggerConfig
 
 	pgPool          *pgxpool.Pool
 	hotelRepository repository.HotelRepository
@@ -80,7 +81,19 @@ func (s *serviceProvider) PgPool(ctx context.Context) *pgxpool.Pool {
 		s.pgPool = pool
 	}
 	return s.pgPool
+}
 
+func (s *serviceProvider) SwaggerConfig() config.SwaggerConfig {
+	if s.swaggerConfig == nil {
+		cfg, err := config.NewSwaggerConfig()
+		if err != nil {
+			log.Fatalf("failed to get swagger config: %s", err.Error())
+		}
+
+		s.swaggerConfig = cfg
+	}
+
+	return s.swaggerConfig
 }
 
 func (s *serviceProvider) HotelRepository(ctx context.Context) repository.HotelRepository {
