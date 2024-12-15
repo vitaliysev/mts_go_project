@@ -6,8 +6,8 @@ import (
 	"github.com/vitaliysev/mts_go_project/internal/hotel/converter"
 )
 
-func (s *serv) SaveHotel(ctx context.Context, info *model.HotelInfo) error {
-	err := s.hotelRepository.SaveHotel(ctx, converter.ToHotelServInfoFromApi(info))
+func (s *serv) SaveHotel(ctx context.Context, info *model.HotelInfo, username string) error {
+	err := s.hotelRepository.SaveHotel(ctx, converter.ToHotelServInfoFromApi(info), username)
 	if err != nil {
 		return err
 	}

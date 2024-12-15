@@ -52,13 +52,19 @@ local-migration-status:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_DSN} status -v
 
 local-migration-hotel-up:
-	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_HOTEL_DSN} up -v
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_HOTEL_DIR} postgres ${PG_HOTEL_DSN} up -v
 
 local-migration-booking-up:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_BOOKING_DIR} postgres ${PG_BOOKING_DSN} up -v
 
-local-migration-down:
-	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${PG_HOTEL_DSN} down -v
+local-migration-booking-down:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_BOOKING_DIR} postgres ${PG_BOOKING_DSN} down -v
+
+local-migration-auth-up:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_AUTH_DIR} postgres ${PG_AUTH_DSN} up -v
+
+local-migration-hotel-down:
+	$(LOCAL_BIN)/goose -dir ${MIGRATION_HOTEL_DIR} postgres ${PG_HOTEL_DSN} down -v
 
 vendor-proto:
 		@if [ ! -d vendor.protogen/validate ]; then \
@@ -73,3 +79,21 @@ vendor-proto:
 			mv vendor.protogen/openapiv2/protoc-gen-openapiv2/options/*.proto vendor.protogen/protoc-gen-openapiv2/options &&\
 			rm -rf vendor.protogen/openapiv2 ;\
 		fi
+
+generate-auth-api:
+	mkdir -p pkg/auth_v1
+	protoc --proto_path api/auth_v1 \
+	--go_out=pkg/auth_v1 --go_opt=paths=source_relative \
+	--plugin=protoc-gen-go=bin/protoc-gen-go \
+	--go-grpc_out=pkg/auth_v1 --go-grpc_opt=paths=source_relative \
+	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
+	api/auth_v1/auth.proto
+
+generate-access-api:
+	mkdir -p pkg/access_v1
+	protoc --proto_path api/access_v1 \
+	--go_out=pkg/access_v1 --go_opt=paths=source_relative \
+	--plugin=protoc-gen-go=bin/protoc-gen-go \
+	--go-grpc_out=pkg/access_v1 --go-grpc_opt=paths=source_relative \
+	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
+	api/access_v1/access.proto

@@ -16,7 +16,8 @@ func NewImplementation(bookService service.BookService) *Implementation {
 }
 
 type CreateBookingRequest struct {
-	Info model.BookInfo `json:"info"`
+	Info         model.BookInfo `json:"info"`
+	Access_token string         `json:"access_token"`
 }
 
 type CreateBookingResponse struct {
@@ -27,12 +28,42 @@ type CreateBookingResponse struct {
 	Period   int64  `json:"period"`
 }
 
+type SigninClientRequest struct {
+	Username string `json:"login"`
+	Password string `json:"password"`
+	Role     string `json:"role"`
+}
+
+type SigninClientResponse struct {
+	Refresh_token string `json:"refresh_token"`
+}
+
+type LoginClientRequest struct {
+	Username      string `json:"login"`
+	Password      string `json:"password"`
+	Refresh_token string `json:"refresh_token"`
+}
+
+type LoginClientResponse struct {
+	Access_token string `json:"access_token"`
+}
+
 type GetBookingRequest struct {
-	ID int64 `json:"id"`
+	ID           int64  `json:"id"`
+	Access_token string `json:"access_token"`
+	Path         string
 }
 
 type GetBookingResponse struct {
 	Info []*model.Book `json:"info"`
+}
+
+type GetRefreshTokenRequest struct {
+	Refresh_token string `json:"refresh_token"`
+}
+
+type GetRefreshTokenResponse struct {
+	Refresh_token string `json:"refresh_token"`
 }
 
 func (x *CreateBookingRequest) GetInfo() *model.BookInfo {
@@ -40,11 +71,4 @@ func (x *CreateBookingRequest) GetInfo() *model.BookInfo {
 		return &x.Info
 	}
 	return nil
-}
-
-func (x *GetBookingRequest) GetInfo() int64 {
-	if x != nil {
-		return x.ID
-	}
-	return 0
 }

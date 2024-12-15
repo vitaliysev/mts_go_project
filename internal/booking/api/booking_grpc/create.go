@@ -9,7 +9,7 @@ import (
 )
 
 func (i *Implementation) Create(ctx context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
-	id, err := i.bookService.Create(ctx, converter.ToBookInfoFromDesc(req.GetInfo()))
+	id, err := i.bookService.Create(ctx, converter.ToBookInfoFromDesc(req.GetInfo()), req.GetUsername())
 	if err != nil {
 		return nil, err
 	}

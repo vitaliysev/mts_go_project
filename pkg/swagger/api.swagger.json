@@ -17,6 +17,18 @@
   ],
   "paths": {},
   "definitions": {
+    "hotel_v1GetIdResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
     "hotel_v1GetInfoResponse": {
       "type": "object",
       "properties": {

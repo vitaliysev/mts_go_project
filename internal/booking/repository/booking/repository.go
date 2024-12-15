@@ -19,6 +19,7 @@ const (
 	createdAtColumn = "created_at"
 	updatedAtColumn = "updated_at"
 	hotelIdColumn   = "hotel_id"
+	usernameColumn  = "username"
 )
 
 type repo struct {
@@ -29,11 +30,11 @@ func NewRepository(db db.Client) repository.BookRepository {
 	return &repo{db: db}
 }
 
-func (r *repo) Create(ctx context.Context, info *model.BookInfo) (int64, error) {
+func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string) (int64, error) {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
-		Columns(peroidColumn, hotelIdColumn).
-		Values(info.Period_use, info.Hotel_id).
+		Columns(peroidColumn, hotelIdColumn, usernameColumn).
+		Values(info.Period_use, info.Hotel_id, username).
 		Suffix("RETURNING id")
 
 	query, args, err := builder.ToSql()
@@ -81,9 +82,9 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
 	return converter.ToBookFromRepo(&book), nil
 }
 
-func (r *repo) List(ctx context.Context, offset, limit, hotel_id int64) ([]*model.Book, error) {
+func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, username string) ([]*model.Book, error) {
 	var builder sq.SelectBuilder
-	if hotel_id != 0 {
+	if hotel_id[0] != 0 {
 		builder = sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
 			PlaceholderFormat(sq.Dollar).
 			From(tableName).
@@ -94,6 +95,7 @@ func (r *repo) List(ctx context.Context, offset, limit, hotel_id int64) ([]*mode
 		builder = sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
 			PlaceholderFormat(sq.Dollar).
 			From(tableName).
+			Where(sq.Eq{usernameColumn: username}).
 			Limit(uint64(limit)).
 			Offset(uint64(offset))
 	}
@@ -132,6 +134,7 @@ func (r *repo) List(ctx context.Context, offset, limit, hotel_id int64) ([]*mode
 func (r *repo) Update(ctx context.Context, id int64, info *model.BookInfo) error {
 	builder := sq.Update(tableName).
 		PlaceholderFormat(sq.Dollar).
+		Set(hotelIdColumn, info.Hotel_id).
 		Set(updatedAtColumn, sq.Expr("NOW()")). // Обновляем поле `updated_at` текущей датой
 		Where(sq.Eq{idColumn: id})
 

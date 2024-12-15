@@ -6,6 +6,7 @@ import (
 	"github.com/vitaliysev/mts_go_project/internal/booking/api/booking_http"
 	"github.com/vitaliysev/mts_go_project/internal/booking/closer"
 	"github.com/vitaliysev/mts_go_project/internal/booking/config"
+	"github.com/vitaliysev/mts_go_project/internal/booking/logger"
 
 	//	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"log"
@@ -134,11 +135,27 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 	bookingHandler := a.serviceProvider.HTTPBookingImpl(ctx)
 
 	mux.HandleFunc("/booking/v1/create", func(w http.ResponseWriter, r *http.Request) {
-		a.handleBooking(w, r, bookingHandler)
+		a.handleBookingCreate(w, r, bookingHandler)
 	})
 
-	mux.HandleFunc("/booking/v1/list", func(w http.ResponseWriter, r *http.Request) {
-		a.handleBooking(w, r, bookingHandler)
+	mux.HandleFunc("/booking/v1/listCl", func(w http.ResponseWriter, r *http.Request) {
+		a.handleBookingGetCl(w, r, "/booking/v1/listCl", bookingHandler)
+	})
+
+	mux.HandleFunc("/booking/v1/listHo", func(w http.ResponseWriter, r *http.Request) {
+		a.handleBookingGetHo(w, r, "/booking/v1/listHo", bookingHandler)
+	})
+
+	mux.HandleFunc("/booking/v1/signin", func(w http.ResponseWriter, r *http.Request) {
+		a.handleAuthAccess(w, r, bookingHandler)
+	})
+
+	mux.HandleFunc("/booking/v1/login", func(w http.ResponseWriter, r *http.Request) {
+		a.handleAuthAccess(w, r, bookingHandler)
+	})
+
+	mux.HandleFunc("/booking/v1/getrefr", func(w http.ResponseWriter, r *http.Request) {
+		a.handleAuthAccess(w, r, bookingHandler)
 	})
 
 	a.httpServer = &http.Server{
@@ -149,9 +166,44 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 	return nil
 }
 
-func (a *App) handleBooking(w http.ResponseWriter, r *http.Request, handler *booking_http.Implementation) {
-	switch r.Method {
-	case http.MethodPost:
+func (a *App) handleBookingGetCl(w http.ResponseWriter, r *http.Request, path string, handler *booking_http.Implementation) {
+	if r.Method == http.MethodGet {
+		var req booking_http.GetBookingRequest
+
+		json.NewDecoder(r.Body).Decode(&req)
+		resp, err := handler.Get(r.Context(), &req, path)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(resp)
+	} else {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func (a *App) handleBookingGetHo(w http.ResponseWriter, r *http.Request, path string, handler *booking_http.Implementation) {
+	if r.Method == http.MethodGet {
+		var req booking_http.GetBookingRequest
+
+		json.NewDecoder(r.Body).Decode(&req)
+		resp, err := handler.Get(r.Context(), &req, path)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(resp)
+	} else {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func (a *App) handleBookingCreate(w http.ResponseWriter, r *http.Request, handler *booking_http.Implementation) {
+	if r.Method == http.MethodPost {
 		var req booking_http.CreateBookingRequest
 
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -169,16 +221,65 @@ func (a *App) handleBooking(w http.ResponseWriter, r *http.Request, handler *boo
 		// Формирование успешного ответа
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(resp)
-	case http.MethodGet:
-		var req booking_http.GetBookingRequest
+	} else {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
 
-		json.NewDecoder(r.Body).Decode(&req)
-		resp, err := handler.Get(r.Context(), &req)
+func (a *App) handleAuthAccess(w http.ResponseWriter, r *http.Request, handler *booking_http.Implementation) {
+	switch r.Method {
+	case http.MethodGet:
+		var req booking_http.LoginClientRequest
+
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		// Вызов метода создания через HTTP-сервис
+		resp, err := handler.Login(r.Context(), &req)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
+		// Формирование успешного ответа
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(resp)
+	case http.MethodPost:
+		var req booking_http.SigninClientRequest
+
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		// Вызов метода создания через HTTP-сервис
+		resp, err := handler.Signin(r.Context(), &req)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Формирование успешного ответа
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(resp)
+	case http.MethodPatch:
+		var req booking_http.GetRefreshTokenRequest
+
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		// Вызов метода создания через HTTP-сервис
+		resp, err := handler.GetRefresh(r.Context(), &req)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Формирование успешного ответа
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(resp)
 	default:
@@ -188,7 +289,7 @@ func (a *App) handleBooking(w http.ResponseWriter, r *http.Request, handler *boo
 
 func (a *App) runHTTPServer() error {
 	log.Printf("HTTP server is running on %s", a.httpServer.Addr)
-
+	logger.Init(getCore(getAtomicLevel()))
 	err := a.httpServer.ListenAndServe()
 	if err != nil {
 		return err

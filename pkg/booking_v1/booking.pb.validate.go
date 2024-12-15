@@ -534,6 +534,8 @@ func (m *CreateRequest) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Username
+
 	if len(errors) > 0 {
 		return CreateRequestMultiError(errors)
 	}
@@ -970,6 +972,8 @@ func (m *ListRequest) validate(all bool) error {
 	// no validation rules for Offset
 
 	// no validation rules for HotelId
+
+	// no validation rules for Username
 
 	if len(errors) > 0 {
 		return ListRequestMultiError(errors)

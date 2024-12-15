@@ -275,6 +275,207 @@ var _ interface {
 	ErrorName() string
 } = GetInfoResponseValidationError{}
 
+// Validate checks the field values on GetIdRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetIdRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetIdRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetIdRequestMultiError, or
+// nil if none found.
+func (m *GetIdRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetIdRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Username
+
+	if len(errors) > 0 {
+		return GetIdRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetIdRequestMultiError is an error wrapping multiple validation errors
+// returned by GetIdRequest.ValidateAll() if the designated constraints aren't met.
+type GetIdRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetIdRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetIdRequestMultiError) AllErrors() []error { return m }
+
+// GetIdRequestValidationError is the validation error returned by
+// GetIdRequest.Validate if the designated constraints aren't met.
+type GetIdRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetIdRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetIdRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetIdRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetIdRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetIdRequestValidationError) ErrorName() string { return "GetIdRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetIdRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetIdRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetIdRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetIdRequestValidationError{}
+
+// Validate checks the field values on GetIdResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetIdResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetIdResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetIdResponseMultiError, or
+// nil if none found.
+func (m *GetIdResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetIdResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return GetIdResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetIdResponseMultiError is an error wrapping multiple validation errors
+// returned by GetIdResponse.ValidateAll() if the designated constraints
+// aren't met.
+type GetIdResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetIdResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetIdResponseMultiError) AllErrors() []error { return m }
+
+// GetIdResponseValidationError is the validation error returned by
+// GetIdResponse.Validate if the designated constraints aren't met.
+type GetIdResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetIdResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetIdResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetIdResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetIdResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetIdResponseValidationError) ErrorName() string { return "GetIdResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetIdResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetIdResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetIdResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetIdResponseValidationError{}
+
 // Validate checks the field values on HotelInfo with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.

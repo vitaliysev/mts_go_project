@@ -17,6 +17,7 @@ const (
 	nameColumn     = "hotel_name"
 	locationColumn = "location"
 	priceColumn    = "price"
+	usernameColumn = "username"
 )
 
 type repo struct {
@@ -27,11 +28,11 @@ func NewRepository(db *pgxpool.Pool) repository.HotelRepository {
 	return &repo{db: db}
 }
 
-func (r *repo) SaveHotel(ctx context.Context, info *model.HotelInfo) error {
+func (r *repo) SaveHotel(ctx context.Context, info *model.HotelInfo, username string) error {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
-		Columns(nameColumn, locationColumn, priceColumn).
-		Values(info.Name, info.Location, info.Price)
+		Columns(nameColumn, locationColumn, priceColumn, usernameColumn).
+		Values(info.Name, info.Location, info.Price, username)
 	query, args, err := builder.ToSql()
 	if err != nil {
 		return err
@@ -116,4 +117,40 @@ func (r *repo) GetInfo(ctx context.Context, id int64) (*model.HotelInfo, error) 
 		return nil, err
 	}
 	return converter.ToHotelInfoFromRepo(info), nil
+}
+
+func (r *repo) GetId(ctx context.Context, username string) (*[]int64, error) {
+	builder := sq.Select(idColumn).
+		PlaceholderFormat(sq.Dollar).
+		From(tableName).
+		Where(sq.Eq{usernameColumn: username}).
+		Limit(1000000)
+	query, args, err := builder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+	rows, err := r.db.Query(ctx, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	// Создаем срез для хранения всех результатов
+	var ans []int64
+
+	// Проходим по всем строкам и заполняем срез
+	for rows.Next() {
+		var id int64
+		if err := rows.Scan(&id); err != nil {
+			return nil, err
+		}
+		ans = append(ans, id)
+	}
+	if err != nil {
+		fmt.Println(err)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &ans, nil
 }

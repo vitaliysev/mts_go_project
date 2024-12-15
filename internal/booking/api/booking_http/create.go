@@ -2,7 +2,12 @@ package booking_http
 
 import (
 	"context"
+	"github.com/vitaliysev/mts_go_project/internal/booking/logger"
+	descAccess "github.com/vitaliysev/mts_go_project/pkg/access_v1"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 	"log"
 	"strings"
 	"time"
@@ -11,16 +16,37 @@ import (
 )
 
 func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) (*CreateBookingResponse, error) {
-	id, err := i.bookService.Create(ctx, req.GetInfo())
+	accessToken := req.Access_token
+	ctx_curr := context.Background()
+	md := metadata.New(map[string]string{"Authorization": "Bearer " + accessToken})
+	ctx_curr = metadata.NewOutgoingContext(ctx_curr, md)
+
+	conn, err := grpc.Dial(
+		"localhost:50055",
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		log.Fatalf("failed to dial GRPC client: %v", err)
+	}
+
+	cl := descAccess.NewAccessV1Client(conn)
+
+	username, errReq := cl.Check(ctx_curr, &descAccess.CheckRequest{
+		EndpointAddress: "/booking/v1/create",
+	})
+	if errReq != nil {
+		log.Fatal(err.Error())
+	}
+
+	logger.Info("Access granted")
+	id, err := i.bookService.Create(ctx, req.GetInfo(), username.GetUsername())
 	if err != nil {
 		return nil, err
 	}
-
-	log.Printf("inserted book with id: %d", id)
-
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn.Close()
+	conn, err = grpc.Dial("localhost:50053", grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("не удалось подключиться: %v", err)
+		logger.Error("не удалось подключиться: %v", zap.Error(err))
 	}
 	defer conn.Close()
 
@@ -37,18 +63,24 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	layout := "02.01.2006"
 	startDate, err1 := time.Parse(layout, start)
 	endDate, err2 := time.Parse(layout, end)
-	if err1 != nil || err2 != nil {
-		log.Fatalf("ошибка парсинга даты: %v", err)
+	if err1 != nil {
+		logger.Error("ошибка парсинга даты: %v", zap.Error(err1))
 	}
-	diff := endDate.Sub(startDate)
+	if err2 != nil {
+		logger.Error("ошибка парсинга даты: %v", zap.Error(err2))
+	}
+	if startDate.After(endDate) {
+		logger.Error("дата заезда позднее даты выезда")
+	}
+	diff := endDate.Sub(startDate)/(1000000000*3600*24) + 1
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
 	resp, err := client.GetInfo(ctx, req_grpc)
 	if err != nil {
-		log.Fatalf("ошибка при вызове GetInfo: %v", err)
+		logger.Error("ошибка при вызове GetInfo: %v", zap.Error(err))
 	}
-
+	logger.Info("inserted book with %d", zap.Int64("id", id))
 	return &CreateBookingResponse{
 		ID:       id,
 		Cost:     int64(diff) * resp.GetHotel().GetPrice(),
