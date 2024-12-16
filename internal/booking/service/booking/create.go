@@ -7,7 +7,7 @@ import (
 )
 
 func (s *serv) Create(ctx context.Context, info *model.BookInfo, username string) (int64, error) {
-	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Service layer")
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Booking.Service.Create")
 	defer span.End()
 	var id int64
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {

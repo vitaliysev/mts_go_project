@@ -25,11 +25,13 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	traceId := fmt.Sprintf("%s", span.SpanContext().TraceID())
 	ctx = metadata.AppendToOutgoingContext(ctx, "x-trace-id", traceId)
 
+	timeStart := time.Now()
+	metric.IncRequestCounter()
 	accessToken := req.Access_token
 	ctx_curr := context.Background()
 	md := metadata.New(map[string]string{"Authorization": "Bearer " + accessToken})
 	ctx_curr = metadata.NewOutgoingContext(ctx_curr, md)
-
+	ctx_curr = metadata.AppendToOutgoingContext(ctx_curr, "x-trace-id", traceId)
 	conn, err := grpc.Dial(
 		"localhost:50055",
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -39,7 +41,7 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	}
 
 	cl := descAccess.NewAccessV1Client(conn)
-
+	fmt.Println("aaa")
 	username, errReq := cl.Check(ctx_curr, &descAccess.CheckRequest{
 		EndpointAddress: "/booking/v1/create",
 	})
@@ -89,6 +91,9 @@ func (i *Implementation) Create(ctx context.Context, req *CreateBookingRequest) 
 	if err != nil {
 		logger.Error("ошибка при вызове GetInfo: %v", zap.Error(err))
 	}
+	diffTime := time.Since(timeStart)
+	metric.IncResponseCounter("success", "booking.Get")
+	metric.HistogramResponseTimeObserve("success", diffTime.Seconds())
 	logger.Info("inserted book with %d", zap.Int64("id", id))
 	response := models.CreateBookingResponse{
 		ID:       id,

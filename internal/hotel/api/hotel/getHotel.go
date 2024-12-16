@@ -43,7 +43,7 @@ type GetHotelResponse struct {
 // @Router /getHotel [post]
 func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = "hotel.handlers.get.New"
+		const op = "hotel.GetHotel"
 		ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, op)
 		defer span.End()
 		traceId := fmt.Sprintf("%s", span.SpanContext().TraceID())
@@ -56,11 +56,23 @@ func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 
 		var req GetHotelRequest
 		err := render.DecodeJSON(r.Body, &req)
+		log.Info("Decoding request body...")
+		if err != nil {
+			span.SetStatus(codes.Error, err.Error())
+			diffTime := time.Since(timeStart)
+			log.Error("failed to decode request body", zap.Error(err))
+			metric.IncResponseCounter("error", op)
+			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
+			render.JSON(w, r, response.Error("failed to decode request"))
+			return
+		}
+		log.Info("request body decoded", zap.Any("request", req))
 		accessToken := req.Access_token
 
 		ctx_curr := context.Background()
 		md := metadata.New(map[string]string{"Authorization": "Bearer " + accessToken})
 		ctx_curr = metadata.NewOutgoingContext(ctx_curr, md)
+		ctx_curr = metadata.AppendToOutgoingContext(ctx_curr, "x-trace-id", traceId)
 
 		conn, err := grpc.Dial(
 			"localhost:50055",
@@ -81,16 +93,6 @@ func NewGetHotel(ctx context.Context, hotel *Implementation) http.HandlerFunc {
 
 		fmt.Println("Access granted")
 
-		if err != nil {
-			span.SetStatus(codes.Error, err.Error())
-			diffTime := time.Since(timeStart)
-			log.Error("failed to decode request body", zap.Error(err))
-			metric.IncResponseCounter("error", op)
-			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
-			render.JSON(w, r, response.Error("failed to decode request"))
-			return
-		}
-		log.Info("request body decoded", zap.Any("request", req))
 		log.Info("validating request...")
 
 		if err := validator.New().Struct(req); err != nil {

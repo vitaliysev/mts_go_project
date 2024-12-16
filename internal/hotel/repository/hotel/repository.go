@@ -30,7 +30,7 @@ func NewRepository(db *pgxpool.Pool) repository.HotelRepository {
 }
 
 func (r *repo) SaveHotel(ctx context.Context, info *model.HotelInfo, username string) error {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo.SaveHotel")
 	defer span.End()
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
@@ -50,7 +50,7 @@ func (r *repo) SaveHotel(ctx context.Context, info *model.HotelInfo, username st
 }
 
 func (r *repo) GetHotels(ctx context.Context) ([]model.Hotel, error) {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo.GetHotels")
 	defer span.End()
 	builder := sq.Select(idColumn, nameColumn, locationColumn, priceColumn).
 		From(tableName)
@@ -74,7 +74,7 @@ func (r *repo) GetHotels(ctx context.Context) ([]model.Hotel, error) {
 }
 
 func (r *repo) GetHotel(ctx context.Context, id int64) (*model.Hotel, error) {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo.GetHotel")
 	defer span.End()
 	builder := sq.Select(idColumn, nameColumn, locationColumn, priceColumn).
 		PlaceholderFormat(sq.Dollar).
@@ -95,7 +95,7 @@ func (r *repo) GetHotel(ctx context.Context, id int64) (*model.Hotel, error) {
 }
 
 func (r *repo) UpdateHotel(ctx context.Context, hotel *model.Hotel) error {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo.UpdateHotel")
 	defer span.End()
 	builder := sq.Update(tableName).
 		PlaceholderFormat(sq.Dollar).
@@ -117,7 +117,7 @@ func (r *repo) UpdateHotel(ctx context.Context, hotel *model.Hotel) error {
 }
 
 func (r *repo) GetInfo(ctx context.Context, id int64) (*model.HotelInfo, error) {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo.GetInfo")
 	defer span.End()
 	builder := sq.Select(nameColumn, locationColumn, priceColumn).
 		PlaceholderFormat(sq.Dollar).
@@ -139,7 +139,7 @@ func (r *repo) GetInfo(ctx context.Context, id int64) (*model.HotelInfo, error) 
 }
 
 func (r *repo) GetId(ctx context.Context, username string) (*[]int64, error) {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Repo.GetId")
 	defer span.End()
 	builder := sq.Select(idColumn).
 		PlaceholderFormat(sq.Dollar).

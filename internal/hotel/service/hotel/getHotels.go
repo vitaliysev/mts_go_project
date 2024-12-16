@@ -8,7 +8,7 @@ import (
 )
 
 func (s *serv) GetHotels(ctx context.Context) ([]model.Hotel, error) {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Service-layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Service.GetHotels")
 	defer span.End()
 	hotels, err := s.hotelRepository.GetHotels(ctx)
 	ans := make([]model.Hotel, len(hotels))

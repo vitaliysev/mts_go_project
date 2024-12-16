@@ -30,6 +30,7 @@ func (i *Implementation) Get(ctx context.Context, req *GetBookingRequest, path s
 	ctx_curr := context.Background()
 	md := metadata.New(map[string]string{"Authorization": "Bearer " + accessToken})
 	ctx_curr = metadata.NewOutgoingContext(ctx_curr, md)
+	ctx_curr = metadata.AppendToOutgoingContext(ctx_curr, "x-trace-id", traceId)
 
 	conn, err := grpc.Dial(
 		"localhost:50055",

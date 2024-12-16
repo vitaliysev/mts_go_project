@@ -33,7 +33,7 @@ func NewRepository(db db.Client) repository.BookRepository {
 }
 
 func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string) (int64, error) {
-	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Booking.Repo.Create")
 	defer span.End()
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
@@ -63,7 +63,7 @@ func (r *repo) Create(ctx context.Context, info *model.BookInfo, username string
 }
 
 func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
-	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Booking.Repo.Get")
 	defer span.End()
 	builder := sq.Select(idColumn, peroidColumn, createdAtColumn, updatedAtColumn, hotelIdColumn).
 		PlaceholderFormat(sq.Dollar).
@@ -93,7 +93,7 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Book, error) {
 }
 
 func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, username string) ([]*model.Book, error) {
-	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Booking.Repo.List")
 	defer span.End()
 	var builder sq.SelectBuilder
 	if hotel_id[0] != 0 {
@@ -147,7 +147,7 @@ func (r *repo) List(ctx context.Context, offset, limit int64, hotel_id []int64, 
 }
 
 func (r *repo) Update(ctx context.Context, id int64, info *model.BookInfo) error {
-	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Repo layer")
+	ctx, span := tracing.Tracer.Tracer("Booking-service").Start(ctx, "Booking.Repo.Update")
 	defer span.End()
 	builder := sq.Update(tableName).
 		PlaceholderFormat(sq.Dollar).

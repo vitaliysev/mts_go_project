@@ -8,7 +8,7 @@ import (
 )
 
 func (s *serv) SaveHotel(ctx context.Context, info *model.HotelInfo, username string) error {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Service-layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Service.save")
 	defer span.End()
 	err := s.hotelRepository.SaveHotel(ctx, converter.ToHotelServInfoFromApi(info), username)
 	if err != nil {

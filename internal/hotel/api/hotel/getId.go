@@ -8,7 +8,7 @@ import (
 )
 
 func (i *Implementation) GetId(ctx context.Context, req *desc.GetIdRequest) (*desc.GetIdResponse, error) {
-	const op = "hotel.handlers.GetId"
+	const op = "hotel.GetId"
 	log := logger.With(
 		zap.String("op", op),
 	)

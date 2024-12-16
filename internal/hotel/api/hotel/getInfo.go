@@ -8,7 +8,7 @@ import (
 )
 
 func (i *Implementation) GetInfo(ctx context.Context, req *desc.GetInfoRequest) (*desc.GetInfoResponse, error) {
-	const op = "hotel.handlers.save"
+	const op = "hotel.GetInfo"
 	log := logger.With(
 		zap.String("op", op),
 	)

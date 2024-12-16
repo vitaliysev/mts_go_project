@@ -48,7 +48,7 @@ type updateResponse struct {
 // @Router /updateHotel [put]
 func NewUpdate(ctx context.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = "hotel.handlers.update.New"
+		const op = "hotel.Update"
 		timeStart := time.Now()
 		log := logger.With(
 			zap.String("op", op),
@@ -63,12 +63,25 @@ func NewUpdate(ctx context.Context) http.HandlerFunc {
 
 		var req UpdateRequest
 		err := render.DecodeJSON(r.Body, &req)
+		log.Info("decoding request body...")
+
+		if err != nil {
+			span.SetStatus(codes.Error, err.Error())
+			diffTime := time.Since(timeStart)
+			log.Error("failed to decode request body", zap.Error(err))
+			metric.IncResponseCounter("error", op)
+			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
+			render.JSON(w, r, response.Error("failed to decode request"))
+			return
+		}
+		log.Info("request body decoded", zap.Any("request", req))
 
 		accessToken := req.Access_token
 
 		ctx_curr := context.Background()
 		md := metadata.New(map[string]string{"Authorization": "Bearer " + accessToken})
 		ctx_curr = metadata.NewOutgoingContext(ctx_curr, md)
+		ctx_curr = metadata.AppendToOutgoingContext(ctx_curr, "x-trace-id", traceId)
 
 		conn, err := grpc.Dial(
 			"localhost:50055",
@@ -89,18 +102,6 @@ func NewUpdate(ctx context.Context) http.HandlerFunc {
 
 		fmt.Println("Access granted")
 
-		log.Info("decoding request body...")
-
-		if err != nil {
-			span.SetStatus(codes.Error, err.Error())
-			diffTime := time.Since(timeStart)
-			log.Error("failed to decode request body", zap.Error(err))
-			metric.IncResponseCounter("error", op)
-			metric.HistogramResponseTimeObserve("error", diffTime.Seconds())
-			render.JSON(w, r, response.Error("failed to decode request"))
-			return
-		}
-		log.Info("request body decoded", zap.Any("request", req))
 		log.Info("validating request body...")
 
 		if err := validator.New().Struct(req); err != nil {

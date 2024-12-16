@@ -4,12 +4,15 @@ import (
 	"context"
 	"errors"
 	"github.com/vitaliysev/mts_go_project/internal/auth/utils"
+	"github.com/vitaliysev/mts_go_project/internal/tracing"
 	descAccess "github.com/vitaliysev/mts_go_project/pkg/access_v1"
 	"google.golang.org/grpc/metadata"
 	"strings"
 )
 
 func (i *Implementation) Check(ctx context.Context, req *descAccess.CheckRequest) (*descAccess.CheckResponse, error) {
+	ctx, span := tracing.Tracer.Tracer("Access-service").Start(ctx, "Access.GetId")
+	defer span.End()
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return nil, errors.New("metadata is not provided")

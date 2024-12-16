@@ -8,7 +8,7 @@ import (
 )
 
 func (s *serv) GetInfo(ctx context.Context, id int64) (*desc.HotelInfo, error) {
-	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "service layer")
+	ctx, span := tracing.Tracer.Tracer("Hotel-service").Start(ctx, "Service.GetInfo")
 	defer span.End()
 	data, err := s.hotelRepository.GetInfo(ctx, id)
 	if err != nil {
