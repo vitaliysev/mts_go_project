@@ -12,6 +12,7 @@ import (
 	"github.com/vitaliysev/mts_go_project/internal/booking/logger"
 	metric "github.com/vitaliysev/mts_go_project/internal/booking/metrics"
 	"github.com/vitaliysev/mts_go_project/internal/booking/model"
+	"github.com/vitaliysev/mts_go_project/internal/booking/redpanda/admin"
 	"github.com/vitaliysev/mts_go_project/internal/tracing"
 	_ "github.com/vitaliysev/mts_go_project/statik/booking/statik"
 	"io"
@@ -52,21 +53,21 @@ func (a *App) Run() error {
 		closer.CloseAll()
 		closer.Wait()
 	}()
-	//topic := "message-sending"
-	//brokers := []string{"localhost:19092"}
-	//
-	////adm, err := admin.New(brokers)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//defer adm.Close()
-	//ok, err := adm.TopicExists(topic)
-	//if !ok {
-	//	err = adm.CreateTopic(topic)
-	//	if err != nil {
-	//		log.Fatal(err)
-	//	}
-	//}
+	topic := "message-sending"
+	brokers := []string{"localhost:19092"}
+
+	adm, err := admin.New(brokers)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer adm.Close()
+	ok, err := adm.TopicExists(topic)
+	if !ok {
+		err = adm.CreateTopic(topic)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 	wg := sync.WaitGroup{}
 	wg.Add(3)
 	go func() {
